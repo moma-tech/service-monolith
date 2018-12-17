@@ -29,6 +29,7 @@ public class OpenAuthInfo extends BaseModel {
   public static final String APP_MODEL = "APP_MODEL";
   public static final String APP_TYPE = "APP_TYPE";
   private static final long serialVersionUID = 1L;
+
   @TableId("ID")
   private Long id;
   /** 公司companyID */
@@ -49,6 +50,7 @@ public class OpenAuthInfo extends BaseModel {
   /** 1：启用，2：禁用 */
   @TableField("APP_STATUS")
   private Boolean appStatus;
+
   @TableField("APP_REMARK")
   private String appRemark;
   /** 模块接入，1火车票，2飞机，3用车 */
