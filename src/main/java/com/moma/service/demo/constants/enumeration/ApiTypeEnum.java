@@ -26,10 +26,6 @@ public enum ApiTypeEnum {
     this.type = type;
   }
 
-  public int getType() {
-    return type;
-  }
-
   public static ApiTypeEnum getApiTypeEnum(int type) {
     for (ApiTypeEnum apiTypeEnum : ApiTypeEnum.values()) {
       if (apiTypeEnum.getType() == type) {
@@ -37,5 +33,9 @@ public enum ApiTypeEnum {
       }
     }
     throw new ServiceException(ApiStatusCodeEnum.UNKOWN_API_TYPE);
+  }
+
+  public int getType() {
+    return type;
   }
 }

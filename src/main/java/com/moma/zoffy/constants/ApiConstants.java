@@ -17,5 +17,5 @@ public interface ApiConstants {
   public static final String REQUEST_METHOD = "method";
   public static final String REQUEST_MEPPING = "mapping";
 
-  public static final String TOKEN_SECRET= "1234567890";
+  public static final String TOKEN_SECRET = "1234567890";
 }

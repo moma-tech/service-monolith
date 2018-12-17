@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class MonolithBootstrap {
-    public static void main(String[] args) {
-        SpringApplication.run(MonolithBootstrap.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(MonolithBootstrap.class, args);
+  }
 }

@@ -24,6 +24,31 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
+  /**
+   * 获取
+   *
+   * @return
+   */
+  private static ApiInfo apiInfo() {
+    /*
+        String title = appInfo.getTitle();
+        String description = appInfo.getDes();
+        String serviceUrl = appInfo.getUrl();
+        String version = appInfo.getVersion();
+        String contactName = appInfo.getConName();
+        String contactUrl = appInfo.getConUrl();
+        String contactEmail = appInfo.getConEmail();
+    */
+
+    return new ApiInfoBuilder()
+        .title("123")
+        .description("123")
+        .termsOfServiceUrl("!23")
+        .version("123")
+        .contact(new Contact("123", ":#21", "qwe"))
+        .build();
+  }
+
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
@@ -33,30 +58,5 @@ public class SwaggerConfiguration {
         .paths(PathSelectors.any())
         .build()
         .useDefaultResponseMessages(false);
-  }
-
-  /**
-   * 获取
-   *
-   * @return
-   */
-  private static ApiInfo apiInfo() {
-/*
-    String title = appInfo.getTitle();
-    String description = appInfo.getDes();
-    String serviceUrl = appInfo.getUrl();
-    String version = appInfo.getVersion();
-    String contactName = appInfo.getConName();
-    String contactUrl = appInfo.getConUrl();
-    String contactEmail = appInfo.getConEmail();
-*/
-
-    return new ApiInfoBuilder()
-        .title("123")
-        .description("123")
-        .termsOfServiceUrl("!23")
-        .version("123")
-        .contact(new Contact("123", ":#21", "qwe"))
-        .build();
   }
 }

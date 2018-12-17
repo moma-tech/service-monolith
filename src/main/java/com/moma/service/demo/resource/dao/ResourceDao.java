@@ -4,13 +4,9 @@ import com.moma.service.demo.resource.model.domain.Resource;
 import com.moma.zoffy.dao.BaseDao;
 
 /**
- * <p>
- *  Mapper 接口
- * </p>
+ * Mapper 接口
  *
  * @author Ivan
  * @since 2018-12-15
  */
-public interface ResourceDao extends BaseDao<Resource> {
-
-}
+public interface ResourceDao extends BaseDao<Resource> {}

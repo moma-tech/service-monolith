@@ -2,7 +2,6 @@ package com.moma.service.demo.config;
 
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -14,7 +13,7 @@ import org.springframework.context.annotation.Bean;
  * @author ivan
  * @version 1.0 Created by ivan on 12/14/18 - 3:36 PM.
  */
-//@SpringBootConfiguration
+// @SpringBootConfiguration
 public class MybatisPlusConfiguration {
 
   /**
@@ -36,5 +35,4 @@ public class MybatisPlusConfiguration {
   public OptimisticLockerInterceptor optimisticLockerInterceptor() {
     return new OptimisticLockerInterceptor();
   }
-
 }

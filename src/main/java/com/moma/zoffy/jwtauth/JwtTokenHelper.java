@@ -49,6 +49,4 @@ public class JwtTokenHelper {
   public static String getCompanyId(String token, String secret) {
     return TypeHelper.castToString(getClams(token, secret).get(ApiConstants.COMPANY_ID));
   }
-
-
 }

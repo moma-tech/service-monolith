@@ -41,7 +41,6 @@
 
     <!-- WEB -->
     <springfox-swagger.version>2.9.2</springfox-swagger.version>
-    <shiro.version>1.4.0</shiro.version>
 
     <!-- Service -->
     <!-- Mybatis Plus -->
@@ -142,13 +141,6 @@
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger-ui</artifactId>
       <version>${springfox-swagger.version}</version>
-    </dependency>
-
-    <!-- Shiro -->
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-spring</artifactId>
-      <version>${shiro.version}</version>
     </dependency>
 
     <!-- Web End   -->

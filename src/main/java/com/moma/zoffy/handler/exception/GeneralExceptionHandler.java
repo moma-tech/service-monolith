@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.ShiroException;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -95,10 +93,6 @@ public class GeneralExceptionHandler extends AbstractHandlerExceptionResolver {
         handleAsyncRequestTimeoutException((AsyncRequestTimeoutException) ex, request, response);
       } else if (ex instanceof ConstraintViolationException) {
         handleConstraintViolationException((ConstraintViolationException) ex, request, response);
-      } else if (ex instanceof UnauthorizedException) {
-        handleUnauthorizedException((UnauthorizedException) ex, request, response);
-      } else if (ex instanceof ShiroException) {
-        handleShiroException((ShiroException) ex, request, response);
       } else {
         handleException(ex, request, response);
       }
@@ -158,29 +152,6 @@ public class GeneralExceptionHandler extends AbstractHandlerExceptionResolver {
       HttpServletRequest request,
       HttpServletResponse response) {
     ResponseHelper.response(request, response, HttpStatusCodeEnum.METHOD_NOT_ALLOWED, ex);
-  }
-
-  /**
-   * The implementation logs a warning, sends an HTTP 401 error
-   *
-   * @param ex the ShiroException to be handled
-   * @param request current HTTP request
-   * @param response current HTTP response
-   */
-  protected void handleShiroException(
-      ShiroException ex, HttpServletRequest request, HttpServletResponse response) {
-    ResponseHelper.response(request, response, HttpStatusCodeEnum.UNAUTHORIZED, ex);
-  }
-  /**
-   * The implementation logs a warning, sends an HTTP 403 error
-   *
-   * @param ex the UnauthorizedException to be handled
-   * @param request current HTTP request
-   * @param response current HTTP response
-   */
-  protected void handleUnauthorizedException(
-      UnauthorizedException ex, HttpServletRequest request, HttpServletResponse response) {
-    ResponseHelper.response(request, response, HttpStatusCodeEnum.FORBIDDEN, ex);
   }
 
   /**
