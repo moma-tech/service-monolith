@@ -115,34 +115,31 @@ public class BasicAuthFilter implements Filter {
         res.getMethod().equalsIgnoreCase(method) && pathMatcher.match(res.getMapping(), requestUri);
   }
 
-  protected boolean anyMatch(List<ResourceAuthDto> perms, String method, String requestUri) {
+  private boolean anyMatch(List<ResourceAuthDto> perms, String method, String requestUri) {
     return perms.stream().anyMatch(match(method, requestUri));
   }
 
   /** 无权限 */
-  protected boolean sendForbiddenFail(ServletRequest request, ServletResponse response) {
+  private void sendForbiddenFail(ServletRequest request, ServletResponse response) {
     ResponseHelper.response(
         (HttpServletRequest) (request),
         (HttpServletResponse) (response),
         HttpStatusCodeEnum.FORBIDDEN);
-    return false;
   }
 
   /** 路径不存在 */
-  protected boolean sendNotFoundFail(ServletRequest request, ServletResponse response) {
+  private void sendNotFoundFail(ServletRequest request, ServletResponse response) {
     ResponseHelper.response(
         (HttpServletRequest) (request),
         (HttpServletResponse) (response),
         HttpStatusCodeEnum.NOT_FOUND);
-    return false;
   }
 
   /** 未认证 */
-  protected boolean sendUnauthorizedFail(ServletRequest request, ServletResponse response) {
+  private void sendUnauthorizedFail(ServletRequest request, ServletResponse response) {
     ResponseHelper.response(
         (HttpServletRequest) (request),
         (HttpServletResponse) (response),
         HttpStatusCodeEnum.UNAUTHORIZED);
-    return false;
   }
 }
