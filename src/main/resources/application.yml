@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: local
+appinfo:
+  title: zoffy
+  des: this is a demo
+  url: http://baidu.com
+  version: 1.0
+  conName: ivan
+  conUrl: http://baidu.com
+  conEmail: ivandjp@163.com
+server:
+  port: 8333
