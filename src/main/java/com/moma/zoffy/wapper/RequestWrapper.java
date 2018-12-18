@@ -2,6 +2,7 @@ package com.moma.zoffy.wapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.util.HtmlUtils;
 
 /**
@@ -21,26 +22,28 @@ public class RequestWrapper extends HttpServletRequestWrapper {
   @Override
   public String getHeader(String name) {
     String value = super.getHeader(name);
-    return HtmlUtils.htmlEscape(value);
+    return StringUtils.isNotBlank(value) ? HtmlUtils.htmlEscape(value) : "";
   }
 
   @Override
   public String getParameter(String name) {
     String value = super.getParameter(name);
-    return HtmlUtils.htmlEscape(value);
+    return StringUtils.isNotBlank(value) ? HtmlUtils.htmlEscape(value) : "";
   }
 
   @Override
   public String getQueryString() {
     String value = super.getQueryString();
-    return HtmlUtils.htmlEscape(value);
+    return StringUtils.isNotBlank(value) ? HtmlUtils.htmlEscape(value) : "";
   }
 
   @Override
   public Object getAttribute(String name) {
     Object value = super.getAttribute(name);
     if (value instanceof String) {
-      HtmlUtils.htmlEscape((String) value);
+      if (StringUtils.isNotBlank(value.toString())) {
+        HtmlUtils.htmlEscape((String) value);
+      }
     }
     return value;
   }

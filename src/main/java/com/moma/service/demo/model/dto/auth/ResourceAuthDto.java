@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class ResourceAuthDto {
   @ApiModelProperty(notes = "Request HTTP Method")
-  private String method;
+  private String apiMethod;
 
   @ApiModelProperty(notes = "Request Path Mapping")
-  private String mapping;
+  private String apiPath;
 }

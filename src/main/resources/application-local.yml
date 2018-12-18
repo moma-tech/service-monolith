@@ -5,8 +5,7 @@ mybatis-plus:
     sql-parser-cache: false
   configuration:
     cache-enabled: false
-
-## JDBC CONFIG
+## Spring CONFIG
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -23,6 +22,8 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       connection-test-query: SELECT 1
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 logging:
   level:
-    root: debug
+    root: info

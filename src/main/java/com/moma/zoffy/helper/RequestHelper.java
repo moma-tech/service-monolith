@@ -31,7 +31,6 @@ public class RequestHelper {
       } catch (IOException ignore) {
       }
     }
-
     return requestBody;
   }
 

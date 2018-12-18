@@ -1,6 +1,7 @@
 package com.moma.zoffy.handler.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.google.common.base.Throwables;
 import com.moma.zoffy.constants.enumeration.HttpStatusCodeEnum;
 import com.moma.zoffy.handler.exception.exceptions.ApiException;
@@ -50,7 +51,6 @@ public class GeneralExceptionHandler extends AbstractHandlerExceptionResolver {
   protected ModelAndView doResolveException(
       HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
     try {
-
       if (ex instanceof ApiException) {
         handleApi((ApiException) ex, request, response);
       } else if (ex instanceof ServiceException) {
@@ -297,6 +297,8 @@ public class GeneralExceptionHandler extends AbstractHandlerExceptionResolver {
       HttpServletRequest request,
       HttpServletResponse response) {
     if (ex.getCause() instanceof JsonParseException) {
+      ResponseHelper.response(request, response, HttpStatusCodeEnum.JSON_FORMAT_ERROR, ex);
+    } else if (ex.getCause() instanceof MismatchedInputException) {
       ResponseHelper.response(request, response, HttpStatusCodeEnum.JSON_FORMAT_ERROR, ex);
     } else {
       ResponseHelper.response(request, response, HttpStatusCodeEnum.BAD_REQUEST, ex);

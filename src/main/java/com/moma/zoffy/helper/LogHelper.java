@@ -37,7 +37,7 @@ public abstract class LogHelper {
       String mapping,
       String method,
       Object result,
-      String runTime,
+      Long runTime,
       String ip,
       String appid) {
 
@@ -50,7 +50,7 @@ public abstract class LogHelper {
             .parameterMap(parameterMap)
             .requestBody(Optional.ofNullable(JacksonHelper.parse(requestBody)).orElse(requestBody))
             .result(result)
-            .runTime(runTime)
+            .runTime((null != runTime ? System.currentTimeMillis() - runTime : 0) + " ms")
             .url(url)
             .appid(appid)
             .build();

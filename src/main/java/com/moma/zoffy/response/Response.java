@@ -26,6 +26,6 @@ public class Response<T> implements java.io.Serializable {
   }
 
   public static Response fail(Exception exception, ApiStatusInfo httpStatusInfo) {
-    return ResponseHelper.buildFailedResponse(exception, httpStatusInfo);
+    return ResponseHelper.buildFailedResponse(null, exception, httpStatusInfo);
   }
 }

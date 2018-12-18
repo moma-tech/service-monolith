@@ -22,7 +22,10 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -35,12 +38,20 @@ import org.springframework.web.util.UrlPathHelper;
  * @version 1.0 Created by ivan on 12/17/18 - 7:28 PM.
  */
 @Order(1)
-@WebFilter(filterName = "basicAuthFilter", urlPatterns = "/")
+@WebFilter(filterName = "basicAuthFilter", urlPatterns = "/open/*")
+@Component
 public class BasicAuthFilter implements Filter {
+  private final PathMatcher pathMatcher;
+  private final ResourceService resourceService;
+  private final UrlPathHelper urlPathHelper;
 
-  private PathMatcher pathMatcher;
-  private ResourceService resourceService;
-  private UrlPathHelper urlPathHelper;
+  @Autowired
+  public BasicAuthFilter(
+      PathMatcher pathMatcher, ResourceService resourceService, UrlPathHelper urlPathHelper) {
+    this.pathMatcher = pathMatcher;
+    this.resourceService = resourceService;
+    this.urlPathHelper = urlPathHelper;
+  }
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {}
@@ -49,6 +60,8 @@ public class BasicAuthFilter implements Filter {
   public void doFilter(
       ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
       throws IOException, ServletException {
+
+    servletRequest.setAttribute(ApiConstants.REQUEST_ID, ObjectId.get().toString());
     servletRequest.setAttribute(ApiConstants.REQUEST_START_TIME, System.currentTimeMillis());
     HttpServletRequest httpRequest = (HttpServletRequest) (servletRequest);
     HttpServletResponse httpResponse = (HttpServletResponse) (servletResponse);
@@ -60,21 +73,22 @@ public class BasicAuthFilter implements Filter {
     servletRequest.setAttribute(ApiConstants.REQUEST_URL, requestUri);
     servletRequest.setAttribute(ApiConstants.REQUEST_METHOD, method);
 
+    List<ResourceAuthDto> aaa = resourceService.getAuthResources(method);
     Optional<ResourceAuthDto> resourceAuthDto =
         resourceService
             .getAuthResources(method)
             .stream()
             .filter(match(method, requestUri))
             .findFirst();
-    /** Check if resource exist */
+    /* Check if resource exist */
     if (resourceAuthDto.isPresent()) {
-      servletRequest.setAttribute(ApiConstants.REQUEST_MEPPING, resourceAuthDto.get().getMapping());
+      servletRequest.setAttribute(ApiConstants.REQUEST_MEPPING, resourceAuthDto.get().getApiPath());
     } else {
       httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
       sendNotFoundFail(servletRequest, servletResponse);
       return;
     }
-    /** Check if Token exist */
+    /* Check if Token exist */
     if (Objects.isNull(token)) {
       List<ResourceAuthDto> resourceAuthDtoList = resourceService.getOpenAuth();
       if (!anyMatch(resourceAuthDtoList, method, requestUri)) {
@@ -82,6 +96,7 @@ public class BasicAuthFilter implements Filter {
         return;
       }
     } else {
+      /* Check if Company exist */
       String companyId = JwtTokenHelper.getCompanyId(token, ApiConstants.TOKEN_SECRET);
       if (StringUtils.isBlank(companyId)) {
         httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -89,6 +104,7 @@ public class BasicAuthFilter implements Filter {
         return;
       }
       servletRequest.setAttribute(ApiConstants.COMPANY_ID, companyId);
+      /* Check if a OPEN/TOKEN Auth */
       List<ResourceAuthDto> resourceAuthDtoList = resourceService.getNonAuth();
       if (!anyMatch(resourceAuthDtoList, method, requestUri)) {
         httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -112,7 +128,8 @@ public class BasicAuthFilter implements Filter {
 
   private Predicate<ResourceAuthDto> match(String method, String requestUri) {
     return res ->
-        res.getMethod().equalsIgnoreCase(method) && pathMatcher.match(res.getMapping(), requestUri);
+        res.getApiMethod().equalsIgnoreCase(method)
+            && pathMatcher.match(res.getApiPath(), requestUri);
   }
 
   private boolean anyMatch(List<ResourceAuthDto> perms, String method, String requestUri) {

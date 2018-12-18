@@ -34,7 +34,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceDao, Resource>
     LambdaQueryWrapper<Resource> resourceWrapper =
         new LambdaQueryWrapper<Resource>()
             .select(Resource::getApiMethod, Resource::getApiPath)
-            .eq(Resource::getApiType, ApiTypeEnum.OPEN);
+            .eq(Resource::getApiType, ApiTypeEnum.OPEN.getType());
     return entitys(resourceWrapper, e -> e.beanToBean(ResourceAuthDto.class));
   }
 

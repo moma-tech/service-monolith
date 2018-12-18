@@ -32,7 +32,7 @@ public class JwtTokenHelper {
         .setClaims(claims)
         .setIssuedAt(now)
         .setExpiration(expire)
-        .signWith(SignatureAlgorithm.RS256, secret)
+        .signWith(SignatureAlgorithm.HS512, secret)
         .compact();
   }
 

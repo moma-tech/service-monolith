@@ -38,4 +38,9 @@ public enum ApiTypeEnum {
   public int getType() {
     return type;
   }
+
+  @Override
+  public String toString() {
+    return type + "";
+  }
 }
