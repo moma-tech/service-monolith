@@ -38,6 +38,8 @@
     <commons-io.version>2.6</commons-io.version>
     <!-- Model Mapper -->
     <model-mapper.version>2.3.2</model-mapper.version>
+    <!-- Google Guava -->
+    <google-guava.version>23.0</google-guava.version>
 
     <!-- WEB -->
     <springfox-swagger.version>2.7.0</springfox-swagger.version>
@@ -83,13 +85,6 @@
       <version>${jackson.version}</version>
     </dependency>
 
-    <!-- Google Gson-->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>${gson.version}</version>
-    </dependency>
-
     <!--Mongo Bson -->
     <dependency>
       <groupId>org.mongodb</groupId>
@@ -110,6 +105,14 @@
       <artifactId>modelmapper</artifactId>
       <version>${model-mapper.version}</version>
     </dependency>
+
+    <!-- Google Guava -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${google-guava.version}</version>
+    </dependency>
+
 
     <!-- Common End   -->
 
@@ -136,6 +139,12 @@
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
       <version>${springfox-swagger.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>guava</artifactId>
+          <groupId>com.google.guava</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.springfox</groupId>
@@ -213,6 +222,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
     </dependency>
     <!-- Spring Family End   -->
   </dependencies>

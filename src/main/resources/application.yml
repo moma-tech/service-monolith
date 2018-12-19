@@ -10,4 +10,4 @@ appinfo:
   conUrl: http://baidu.com
   conEmail: ivandjp@163.com
 server:
-  port: 8333
+  port: 8080

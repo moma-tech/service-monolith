@@ -37,7 +37,7 @@ public class SwaggerConfiguration {
         String version = appInfo.getVersion();
         String contactName = appInfo.getConName();
         String contactUrl = appInfo.getConUrl();
-        String contactEmail = appInfo.getConEmail();
+        String contactEmail = appInfo.getConEmail()
     */
 
     return new ApiInfoBuilder()

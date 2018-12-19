@@ -18,14 +18,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -37,21 +34,10 @@ import org.springframework.web.util.UrlPathHelper;
  * @author ivan
  * @version 1.0 Created by ivan on 12/17/18 - 7:28 PM.
  */
-@Order(1)
-@WebFilter(filterName = "basicAuthFilter", urlPatterns = "/open/*")
-@Component
 public class BasicAuthFilter implements Filter {
-  private final PathMatcher pathMatcher;
-  private final ResourceService resourceService;
-  private final UrlPathHelper urlPathHelper;
-
-  @Autowired
-  public BasicAuthFilter(
-      PathMatcher pathMatcher, ResourceService resourceService, UrlPathHelper urlPathHelper) {
-    this.pathMatcher = pathMatcher;
-    this.resourceService = resourceService;
-    this.urlPathHelper = urlPathHelper;
-  }
+  @Autowired private PathMatcher pathMatcher;
+  @Autowired private ResourceService resourceService;
+  @Autowired private UrlPathHelper urlPathHelper;
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {}
