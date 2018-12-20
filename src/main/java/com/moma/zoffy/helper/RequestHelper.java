@@ -4,8 +4,10 @@ import com.moma.zoffy.constants.enumeration.HttpMethodEnum;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.StreamUtils;
 
 /**
  * RequestHelper
@@ -15,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author ivan
  * @version 1.0 Created by ivan on 12/13/18 - 7:34 PM.
  */
+@Slf4j
 public class RequestHelper {
 
   /**
@@ -33,7 +36,21 @@ public class RequestHelper {
     }
     return requestBody;
   }
-
+  /**
+   * @author Created by ivan on 3:19 PM 12/20/18.
+   *     <p>getByteBody
+   * @param request :
+   * @return byte[]
+   */
+  public static byte[] getByteBody(HttpServletRequest request) {
+    byte[] body = new byte[0];
+    try {
+      body = StreamUtils.copyToByteArray(request.getInputStream());
+    } catch (IOException e) {
+      log.error("Error: Get RequestBody byte[] fail," + e);
+    }
+    return body;
+  }
   /**
    * @param request :
    * @return boolean

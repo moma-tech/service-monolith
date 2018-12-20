@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ivan
  * @version 1.0 Created by ivan on 12/18/18 - 2:43 PM.
  */
-@Api(tags = "Token", description = "Token Apis")
+@Api(tags = "Token", description = "Access Token Apis")
 @RestController
 @RequestMapping(value = "/open/token")
 public class TokenApi {
@@ -35,9 +35,9 @@ public class TokenApi {
     this.openAuthInfoService = openAuthInfoService;
   }
 
-  @ApiOperation(value = "Token Create", notes = "Create Token For Company Access")
+  @ApiOperation(value = "Obtain Token", notes = "Obtain An Access Token For Company")
   @PostMapping(
-      value = "/create",
+      value = "/request",
       produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
       consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public String createToken(@RequestBody @Validated TokenParam tokenParam) {

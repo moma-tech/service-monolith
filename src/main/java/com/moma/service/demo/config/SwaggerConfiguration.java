@@ -1,6 +1,8 @@
 package com.moma.service.demo.config;
 
+import com.moma.service.demo.constants.AppInfo;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -24,28 +26,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
+  private final AppInfo appInfo;
+
+  @Autowired
+  public SwaggerConfiguration(AppInfo appInfo) {
+    this.appInfo = appInfo;
+  }
+
   /**
    * 获取
    *
    * @return
    */
   private ApiInfo apiInfo() {
-    /*
-        String title = appInfo.getTitle();
-        String description = appInfo.getDes();
-        String serviceUrl = appInfo.getUrl();
-        String version = appInfo.getVersion();
-        String contactName = appInfo.getConName();
-        String contactUrl = appInfo.getConUrl();
-        String contactEmail = appInfo.getConEmail()
-    */
-
     return new ApiInfoBuilder()
-        .title("123")
-        .description("123")
-        .termsOfServiceUrl("!23")
-        .version("123")
-        .contact(new Contact("123", ":#21", "qwe"))
+        .title(appInfo.getTitle())
+        .description(appInfo.getDes())
+        .termsOfServiceUrl(appInfo.getUrl())
+        .version(appInfo.getVersion())
+        .contact(new Contact(appInfo.getConName(), appInfo.getUrl(), appInfo.getConEmail()))
         .build();
   }
 

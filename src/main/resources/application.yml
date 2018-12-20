@@ -2,12 +2,12 @@ spring:
   profiles:
     active: local
 appinfo:
-  title: zoffy
-  des: this is a demo
-  url: http://baidu.com
+  title: 奥特曼大帝国
+  des: This is a Demo API project
+  url: https://www.mmtech.top
   version: 1.0
-  conName: ivan
-  conUrl: http://baidu.com
+  conName: Ivan
+  conUrl: https://www.mmtech.top
   conEmail: ivandjp@163.com
 server:
   port: 8080

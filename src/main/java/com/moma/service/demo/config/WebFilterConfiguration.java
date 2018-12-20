@@ -1,6 +1,7 @@
 package com.moma.service.demo.config;
 
 import com.moma.service.demo.filter.BasicAuthFilter;
+import com.moma.zoffy.interception.filter.XssFilter;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -29,5 +30,13 @@ public class WebFilterConfiguration {
   @Bean
   public BasicAuthFilter getBasicAuthFilter() {
     return new BasicAuthFilter();
+  }
+
+  public FilterRegistrationBean<XssFilter> xssFilterFilterRegistrationBean() {
+    FilterRegistrationBean<XssFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
+    filterFilterRegistrationBean.setFilter(new XssFilter());
+    filterFilterRegistrationBean.addUrlPatterns("/*");
+    filterFilterRegistrationBean.setOrder(Ordered.LOWEST_PRECEDENCE - 2);
+    return filterFilterRegistrationBean;
   }
 }
