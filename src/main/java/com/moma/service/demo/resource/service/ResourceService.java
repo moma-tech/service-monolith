@@ -12,10 +12,23 @@ import java.util.List;
  * @since 2018-12-15
  */
 public interface ResourceService extends BaseService<Resource> {
-
-  public List<ResourceAuthDto> getAuthResources(String method);
-
-  public List<ResourceAuthDto> getOpenAuth();
-
-  public List<ResourceAuthDto> getNonAuth();
+  /**
+   * @author Created by ivan on 4:45 PM 12/21/18.
+   *     <p>//TODO getAuthResources
+   * @param method :
+   * @return java.util.List<com.moma.service.demo.model.dto.auth.ResourceAuthDto>
+   */
+  List<ResourceAuthDto> getAuthResources(String method);
+  /**
+   * @author Created by ivan on 4:45 PM 12/21/18.
+   *     <p>//TODO getOpenAuth
+   * @return java.util.List<com.moma.service.demo.model.dto.auth.ResourceAuthDto>
+   */
+  List<ResourceAuthDto> getOpenAuth();
+  /**
+   * @author Created by ivan on 4:45 PM 12/21/18.
+   *     <p>//TODO getNonAuth
+   * @return java.util.List<com.moma.service.demo.model.dto.auth.ResourceAuthDto>
+   */
+  List<ResourceAuthDto> getNonAuth();
 }

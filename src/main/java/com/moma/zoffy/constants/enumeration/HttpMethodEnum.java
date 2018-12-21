@@ -9,12 +9,20 @@ package com.moma.zoffy.constants.enumeration;
  * @version 1.0
  */
 public enum HttpMethodEnum {
+  /** GET */
   GET,
+  /** Post */
   POST,
+  /** Put */
   PUT,
+  /** Delete */
   DELETE,
+  /** Patch */
   PATCH,
+  /** Trace */
   TRACE,
+  /** Head */
   HEAD,
+  /** Options */
   OPTIONS
 }

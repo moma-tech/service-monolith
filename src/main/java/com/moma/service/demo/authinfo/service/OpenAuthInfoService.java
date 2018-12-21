@@ -11,5 +11,11 @@ import com.moma.zoffy.service.BaseService;
  * @since 2018-12-17
  */
 public interface OpenAuthInfoService extends BaseService<OpenAuthInfo> {
+  /**
+   * @author Created by ivan on 4:43 PM 12/21/18.
+   *     <p>Check Company if existed
+   * @param tokenParam :
+   * @return java.lang.Boolean
+   */
   Boolean checkCompanyAuthInfo(TokenParam tokenParam);
 }

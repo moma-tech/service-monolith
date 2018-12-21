@@ -22,16 +22,16 @@ import org.springframework.cglib.beans.BeanMap;
  */
 public class BeanHelper {
 
-  private static final ModelMapper modelMapper;
+  private static final ModelMapper MODEL_MAPPER;
 
   static {
-    modelMapper = new ModelMapper();
-    modelMapper.getConfiguration().setFullTypeMatchingRequired(true);
-    modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    MODEL_MAPPER = new ModelMapper();
+    MODEL_MAPPER.getConfiguration().setFullTypeMatchingRequired(true);
+    MODEL_MAPPER.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
   }
 
   public static ModelMapper getModelMapper() {
-    return modelMapper;
+    return MODEL_MAPPER;
   }
 
   public static <T> Map<String, Object> beanToMap(T bean) {

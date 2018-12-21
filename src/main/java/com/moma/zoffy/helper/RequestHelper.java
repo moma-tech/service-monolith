@@ -1,5 +1,7 @@
 package com.moma.zoffy.helper;
 
+import com.moma.zoffy.constants.HttpConstants;
+import com.moma.zoffy.constants.SysConstants;
 import com.moma.zoffy.constants.enumeration.HttpMethodEnum;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -149,23 +151,23 @@ public class RequestHelper {
    */
   public static String getIpAddr(HttpServletRequest request) {
     // nginx代理获取的真实用户ip
-    String ip = request.getHeader("X-Real-IP");
-    if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getHeader("X-Forwarded-For");
+    String ip = request.getHeader(HttpConstants.X_REAL_IP);
+    if (StringUtils.isBlank(ip) || HttpConstants.UNKNOWN.equalsIgnoreCase(ip)) {
+      ip = request.getHeader(HttpConstants.X_FORWARDED_FOR);
     }
-    if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getHeader("Proxy-Client-IP");
+    if (StringUtils.isBlank(ip) || HttpConstants.UNKNOWN.equalsIgnoreCase(ip)) {
+      ip = request.getHeader(HttpConstants.PROXY_CLIENT_IP);
     }
-    if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getHeader("WL-Proxy-Client-IP");
+    if (StringUtils.isBlank(ip) || HttpConstants.UNKNOWN.equalsIgnoreCase(ip)) {
+      ip = request.getHeader(HttpConstants.WL_PROXY_CLIENT_IP);
     }
-    if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+    if (StringUtils.isBlank(ip) || HttpConstants.UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getRemoteAddr();
     }
 
-    if (null != ip && ip.length() > 15) {
-      if (ip.indexOf(",") > 0) {
-        ip = ip.substring(0, ip.indexOf(","));
+    if (null != ip && ip.length() > HttpConstants.IP_MIN_LENGTH) {
+      if (ip.indexOf(SysConstants.GLOBE_SPLIT_COMMA) > 0) {
+        ip = ip.substring(0, ip.indexOf(SysConstants.GLOBE_SPLIT_COMMA));
       }
     }
     return ip;

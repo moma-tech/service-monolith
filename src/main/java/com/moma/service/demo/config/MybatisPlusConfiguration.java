@@ -2,6 +2,7 @@ package com.moma.service.demo.config;
 
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -13,13 +14,13 @@ import org.springframework.context.annotation.Bean;
  * @author ivan
  * @version 1.0 Created by ivan on 12/14/18 - 3:36 PM.
  */
-// @SpringBootConfiguration
+@SpringBootConfiguration
 public class MybatisPlusConfiguration {
 
   /**
-   * 分页
-   *
-   * @return
+   * @author Created by ivan on 4:46 PM 12/21/18.
+   *     <p>//TODO paginationInterceptor
+   * @return com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor
    */
   @Bean
   public PaginationInterceptor paginationInterceptor() {
@@ -27,9 +28,9 @@ public class MybatisPlusConfiguration {
   }
 
   /**
-   * 乐观锁
-   *
-   * @return
+   * @author Created by ivan on 4:46 PM 12/21/18.
+   *     <p>//TODO optimisticLockerInterceptor
+   * @return com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor
    */
   @Bean
   public OptimisticLockerInterceptor optimisticLockerInterceptor() {

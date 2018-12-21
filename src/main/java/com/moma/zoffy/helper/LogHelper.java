@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0 Created by ivan on 12/13/18 - 4:45 PM.
  */
 @Slf4j
-public abstract class LogHelper {
+public class LogHelper {
   /**
    * @param requestId :
    * @param parameterMap :

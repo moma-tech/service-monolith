@@ -34,7 +34,7 @@ import org.springframework.web.util.HtmlUtils;
  * @author ivan
  * @version 1.0 Created by ivan on 12/13/18 - 4:52 PM.
  */
-public abstract class JacksonHelper {
+public class JacksonHelper {
 
   private static ObjectMapper objectMapper;
 

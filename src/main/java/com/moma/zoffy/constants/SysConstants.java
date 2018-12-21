@@ -14,4 +14,7 @@ public interface SysConstants {
   int INIT_MAP_SIZE = 16;
 
   String AUTHORIZATION_HEADER = "Authorization";
+
+  String GLOBE_SPLIT_COMMA = ",";
+  String GLOBE_SPLIT_DOT = ".";
 }
