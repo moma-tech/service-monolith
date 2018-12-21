@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.util.UrlPathHelper;
@@ -46,9 +47,11 @@ public class BasicAuthFilter implements Filter {
   public void doFilter(
       ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
       throws IOException, ServletException {
-
-    servletRequest.setAttribute(ApiConstants.REQUEST_ID, ObjectId.get().toString());
+    String requestId = ObjectId.get().toString();
+    servletRequest.setAttribute(ApiConstants.REQUEST_ID, requestId);
     servletRequest.setAttribute(ApiConstants.REQUEST_START_TIME, System.currentTimeMillis());
+    MDC.put(ApiConstants.REQUEST_ID, requestId);
+
     HttpServletRequest httpRequest = (HttpServletRequest) (servletRequest);
     HttpServletResponse httpResponse = (HttpServletResponse) (servletResponse);
 
@@ -102,7 +105,9 @@ public class BasicAuthFilter implements Filter {
   }
 
   @Override
-  public void destroy() {}
+  public void destroy() {
+    MDC.remove(ApiConstants.REQUEST_ID);
+  }
 
   private String getToken(HttpServletRequest httpRequest) {
     String token = httpRequest.getHeader(SysConstants.AUTHORIZATION_HEADER);

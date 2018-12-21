@@ -10,11 +10,11 @@ package com.moma.zoffy.constants;
  */
 public interface ApiConstants {
 
-  public static final String COMPANY_ID = "app_id";
-  public static final String ACCESS_TOKEN = "access_token";
+  public static final String COMPANY_ID = "appId";
+  public static final String ACCESS_TOKEN = "accessToken";
 
-  public static final String REQUEST_START_TIME = "start_time";
-  public static final String REQUEST_ID = "request_id";
+  public static final String REQUEST_START_TIME = "startTime";
+  public static final String REQUEST_ID = "requestId";
   public static final String REQUEST_URL = "url";
   public static final String REQUEST_METHOD = "method";
   public static final String REQUEST_MEPPING = "mapping";

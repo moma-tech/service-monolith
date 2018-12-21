@@ -24,7 +24,6 @@ public class OpenAuthInfoServiceImpl extends BaseServiceImpl<OpenAuthInfoDao, Op
 
   @Override
   public Boolean checkCompanyAuthInfo(TokenParam tokenParam) {
-
     Map<Property<OpenAuthInfo, ?>, String> paramMap = new HashMap<>(2);
     paramMap.put(OpenAuthInfo::getAppId, tokenParam.getAppId());
     paramMap.put(OpenAuthInfo::getAppKey, tokenParam.getAppKey());

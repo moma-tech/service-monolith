@@ -24,6 +24,3 @@ spring:
       connection-test-query: SELECT 1
   jackson:
     property-naming-strategy: SNAKE_CASE
-logging:
-  level:
-    root: info
