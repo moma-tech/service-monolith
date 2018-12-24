@@ -1,4 +1,4 @@
-package com.moma.service.demo.filter;
+package com.moma.service.demo.filter.interceptor;
 
 import com.moma.service.demo.authinfo.service.OpenAuthInfoService;
 import com.moma.service.demo.model.param.BaseParam;
@@ -7,42 +7,32 @@ import com.moma.zoffy.constants.enumeration.ApiStatusCodeEnum;
 import com.moma.zoffy.handler.exception.exceptions.ApiException;
 import com.moma.zoffy.helper.JacksonHelper;
 import com.moma.zoffy.helper.RequestHelper;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * DataSignatureFilter
+ * DataSignatureInterceptor
  *
- * <p>Data Signature Check Filter
+ * <p>Data Signature Verification Interceptor
  *
  * @author ivan
- * @version 1.0 Created by ivan on 12/24/18 - 4:31 PM.
+ * @version 1.0 Created by ivan on 12/24/18 - 6:17 PM.
  */
-public class DataSignatureFilter implements Filter {
+public class DataSignatureInterceptor extends HandlerInterceptorAdapter {
   @Autowired OpenAuthInfoService openAuthInfoService;
 
   @Override
-  public void init(FilterConfig filterConfig) throws ServletException {}
-
-  @Override
-  public void doFilter(
-      ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-      throws IOException, ServletException {
-    HttpServletRequest httpRequest = (HttpServletRequest) (servletRequest);
-    HttpServletResponse httpResponse = (HttpServletResponse) (servletResponse);
+  public boolean preHandle(
+      HttpServletRequest httpRequest, HttpServletResponse response, Object handler)
+      throws Exception {
     String token = RequestHelper.getToken(httpRequest);
+    /* If No Token, is a Open One, no need check*/
     if (StringUtils.isNotBlank(token)) {
       /* Read Sign Key From DB */
       String companyId = (String) httpRequest.getAttribute(ApiConstants.COMPANY_ID);
@@ -84,11 +74,8 @@ public class DataSignatureFilter implements Filter {
       if (!calculateSign.equalsIgnoreCase(params.getSign())) {
         throw new ApiException(ApiStatusCodeEnum.SIGN_ERROR.transform());
       }
-      /* PAssed */
-      filterChain.doFilter(servletRequest, servletResponse);
     }
+    /* Passed */
+    return true;
   }
-
-  @Override
-  public void destroy() {}
 }
