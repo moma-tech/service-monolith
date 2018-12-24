@@ -4,9 +4,9 @@ import com.moma.zoffy.constants.enumeration.ApiStatusCodeEnum;
 import com.moma.zoffy.response.dto.ApiStatusInfo;
 
 /**
- * ApiExcpetion
+ * ServiceException
  *
- * <p>TODO
+ * <p>Exception throws from Service
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/15/18 - 2:41 PM.

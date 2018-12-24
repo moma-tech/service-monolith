@@ -5,7 +5,7 @@ import com.moma.zoffy.response.dto.ApiStatusInfo;
 /**
  * ApiStatusCodeEnum
  *
- * <p>TODO
+ * <p>Self Defined Api Status Code
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/15/18 - 3:12 PM.

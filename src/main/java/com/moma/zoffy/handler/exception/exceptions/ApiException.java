@@ -6,7 +6,7 @@ import com.moma.zoffy.response.dto.ApiStatusInfo;
 /**
  * ApiException
  *
- * <p>TODO
+ * <p>Exception throws from api
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/15/18 - 2:55 PM.

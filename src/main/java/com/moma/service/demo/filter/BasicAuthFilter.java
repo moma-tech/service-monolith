@@ -3,8 +3,8 @@ package com.moma.service.demo.filter;
 import com.moma.service.demo.model.dto.auth.ResourceAuthDto;
 import com.moma.service.demo.resource.service.ResourceService;
 import com.moma.zoffy.constants.ApiConstants;
-import com.moma.zoffy.constants.SysConstants;
 import com.moma.zoffy.constants.enumeration.HttpStatusCodeEnum;
+import com.moma.zoffy.helper.RequestHelper;
 import com.moma.zoffy.helper.ResponseHelper;
 import com.moma.zoffy.jwtauth.JwtTokenHelper;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import org.springframework.web.util.UrlPathHelper;
 /**
  * AuthFilter
  *
- * <p>TODO
+ * <p>Basic Auth Filter with JWT Token
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/17/18 - 7:28 PM.
@@ -43,6 +43,15 @@ public class BasicAuthFilter implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {}
 
+  /**
+   * @author Created by ivan on 2:37 PM 12/24/18.
+   *     <p>Fliter Auth info
+   *     <p>1.add log info
+   *     <p>2.match resource user can access
+   * @param servletRequest : Request
+   * @param servletResponse : Response
+   * @param filterChain : F chain
+   */
   @Override
   public void doFilter(
       ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
@@ -55,7 +64,7 @@ public class BasicAuthFilter implements Filter {
     HttpServletRequest httpRequest = (HttpServletRequest) (servletRequest);
     HttpServletResponse httpResponse = (HttpServletResponse) (servletResponse);
 
-    String token = getToken(httpRequest);
+    String token = RequestHelper.getToken(httpRequest);
     String method = httpRequest.getMethod();
     String requestUri = urlPathHelper.getOriginatingRequestUri(httpRequest);
 
@@ -103,31 +112,46 @@ public class BasicAuthFilter implements Filter {
     }
     filterChain.doFilter(servletRequest, servletResponse);
   }
-
+  /**
+   * @author Created by ivan on 2:44 PM 12/24/18.
+   *     <p>//remove MDC
+   */
   @Override
   public void destroy() {
     MDC.remove(ApiConstants.REQUEST_ID);
   }
 
-  private String getToken(HttpServletRequest httpRequest) {
-    String token = httpRequest.getHeader(SysConstants.AUTHORIZATION_HEADER);
-    if (StringUtils.isBlank(token)) {
-      token = httpRequest.getParameter(ApiConstants.ACCESS_TOKEN);
-    }
-    return StringUtils.isBlank(token) ? null : token.replaceFirst("Bearer", "");
-  }
-
+  /**
+   * @author Created by ivan on 2:39 PM 12/24/18.
+   *     <p>Match HTTP Method / Request URL
+   * @param method : HTTP Method Head
+   * @param requestUri : Request URL
+   * @return java.util.function.Predicate<com.moma.service.demo.model.dto.auth.ResourceAuthDto>
+   */
   private Predicate<ResourceAuthDto> match(String method, String requestUri) {
     return res ->
         res.getApiMethod().equalsIgnoreCase(method)
             && pathMatcher.match(res.getApiPath(), requestUri);
   }
 
+  /**
+   * @author Created by ivan on 2:45 PM 12/24/18.
+   *     <p>//Match Any in List with Method/Request URL
+   * @param perms : resource List
+   * @param method : HTTP Method
+   * @param requestUri : Request URL
+   * @return boolean : T/F
+   */
   private boolean anyMatch(List<ResourceAuthDto> perms, String method, String requestUri) {
     return perms.stream().anyMatch(match(method, requestUri));
   }
 
-  /** 无权限 */
+  /**
+   * @author Created by ivan on 2:47 PM 12/24/18.
+   *     <p>//Response back with Forbidden
+   * @param request : request
+   * @param response : response
+   */
   private void sendForbiddenFail(ServletRequest request, ServletResponse response) {
     ResponseHelper.response(
         (HttpServletRequest) (request),
@@ -135,7 +159,12 @@ public class BasicAuthFilter implements Filter {
         HttpStatusCodeEnum.FORBIDDEN);
   }
 
-  /** 路径不存在 */
+  /**
+   * @author Created by ivan on 2:48 PM 12/24/18.
+   *     <p>//Not match a resource
+   * @param request : request
+   * @param response : response
+   */
   private void sendNotFoundFail(ServletRequest request, ServletResponse response) {
     ResponseHelper.response(
         (HttpServletRequest) (request),
@@ -143,7 +172,12 @@ public class BasicAuthFilter implements Filter {
         HttpStatusCodeEnum.NOT_FOUND);
   }
 
-  /** 未认证 */
+  /**
+   * @author Created by ivan on 2:48 PM 12/24/18.
+   *     <p>//Not Auth for the resource
+   * @param request : request
+   * @param response : response
+   */
   private void sendUnauthorizedFail(ServletRequest request, ServletResponse response) {
     ResponseHelper.response(
         (HttpServletRequest) (request),

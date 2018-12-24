@@ -6,28 +6,30 @@ import com.moma.zoffy.service.BaseService;
 import java.util.List;
 
 /**
- * 服务类
+ * ResourceService
  *
- * @author Ivan
- * @since 2018-12-15
+ * <p>Api Resource Service Interface
+ *
+ * @version 1.0
+ * @author Created by ivan on 2:55 PM 12/24/18.
  */
 public interface ResourceService extends BaseService<Resource> {
   /**
    * @author Created by ivan on 4:45 PM 12/21/18.
-   *     <p>//TODO getAuthResources
+   *     <p>//Get Api Resource with Method and URL
    * @param method :
    * @return java.util.List<com.moma.service.demo.model.dto.auth.ResourceAuthDto>
    */
   List<ResourceAuthDto> getAuthResources(String method);
   /**
    * @author Created by ivan on 4:45 PM 12/21/18.
-   *     <p>//TODO getOpenAuth
+   *     <p>//Get Api Resources with OPEN TYpe
    * @return java.util.List<com.moma.service.demo.model.dto.auth.ResourceAuthDto>
    */
   List<ResourceAuthDto> getOpenAuth();
   /**
    * @author Created by ivan on 4:45 PM 12/21/18.
-   *     <p>//TODO getNonAuth
+   *     <p>//Get Api Resources with OPEN/TOKEN Type
    * @return java.util.List<com.moma.service.demo.model.dto.auth.ResourceAuthDto>
    */
   List<ResourceAuthDto> getNonAuth();

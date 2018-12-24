@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
+ * Api Resource Entity
+ *
  * @author Ivan
  * @since 2018-12-15
  */

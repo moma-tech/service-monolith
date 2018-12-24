@@ -5,7 +5,9 @@ import com.moma.zoffy.helper.modelmapper.BeanHelper;
 /**
  * BaseModel
  *
- * <p>TODO
+ * <p>Base Model
+ *
+ * <p>Each Model should extends this
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/13/18 - 7:26 PM.

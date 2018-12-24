@@ -19,7 +19,7 @@ public class MybatisPlusConfiguration {
 
   /**
    * @author Created by ivan on 4:46 PM 12/21/18.
-   *     <p>//TODO paginationInterceptor
+   *     <p>Pagination
    * @return com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor
    */
   @Bean
@@ -29,7 +29,7 @@ public class MybatisPlusConfiguration {
 
   /**
    * @author Created by ivan on 4:46 PM 12/21/18.
-   *     <p>//TODO optimisticLockerInterceptor
+   *     <p>Optimistic Locker
    * @return com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor
    */
   @Bean

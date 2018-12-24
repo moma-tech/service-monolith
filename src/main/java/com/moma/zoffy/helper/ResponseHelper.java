@@ -38,6 +38,15 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseHelper {
 
+  /**
+   * @author Created by ivan on 3:29 PM 12/24/18.
+   *     <p>// response
+   * @param request :
+   * @param response :
+   * @param apiStatusCodeEnum :
+   * @param exception :
+   * @return void
+   */
   public static void response(
       HttpServletRequest request,
       HttpServletResponse response,
@@ -46,6 +55,15 @@ public class ResponseHelper {
     response(request, response, apiStatusCodeEnum.transform(), exception);
   }
 
+  /**
+   * @author Created by ivan on 3:30 PM 12/24/18.
+   *     <p>// response
+   * @param request :
+   * @param response :
+   * @param httpStatusCodeEnum :
+   * @param exception :
+   * @return void
+   */
   public static void response(
       HttpServletRequest request,
       HttpServletResponse response,
@@ -54,18 +72,42 @@ public class ResponseHelper {
     response(request, response, httpStatusCodeEnum.transform(), exception);
   }
 
+  /**
+   * @author Created by ivan on 3:30 PM 12/24/18.
+   *     <p>// response
+   * @param request :
+   * @param response :
+   * @param httpStatusCodeEnum :
+   * @return void
+   */
   public static void response(
       HttpServletRequest request,
       HttpServletResponse response,
       HttpStatusCodeEnum httpStatusCodeEnum) {
     response(request, response, httpStatusCodeEnum.transform(), null);
   }
-
+  /**
+   * @author Created by ivan on 3:30 PM 12/24/18.
+   *     <p>// response
+   * @param request :
+   * @param response :
+   * @param httpStatusInfo :
+   * @return void
+   */
   public static void response(
       HttpServletRequest request, HttpServletResponse response, ApiStatusInfo httpStatusInfo) {
     response(request, response, httpStatusInfo, null);
   }
 
+  /**
+   * @author Created by ivan on 3:30 PM 12/24/18.
+   *     <p>// response
+   * @param request :
+   * @param response :
+   * @param httpStatusInfo :
+   * @param exception :
+   * @return void
+   */
   public static void response(
       HttpServletRequest request,
       HttpServletResponse response,
@@ -77,6 +119,15 @@ public class ResponseHelper {
         buildFailedResponse(request, exception, httpStatusInfo));
   }
 
+  /**
+   * @author Created by ivan on 3:30 PM 12/24/18.
+   *     <p>1.Pring Log.
+   *     <p>2.response write
+   * @param request :
+   * @param response :
+   * @param result :
+   * @return void
+   */
   public static void response(HttpServletRequest request, ResponseWrapper response, Object result) {
     LogHelper.printRequestLogInfo(
         (String) request.getAttribute(ApiConstants.REQUEST_ID),
@@ -92,7 +143,14 @@ public class ResponseHelper {
 
     response.writeJsonResponse(result);
   }
-
+  /**
+   * @author Created by ivan on 3:31 PM 12/24/18.
+   *     <p>//Build Failed Response Object
+   * @param request :
+   * @param exception :
+   * @param httpStatusInfo :
+   * @return com.moma.zoffy.response.dto.FailedResponse
+   */
   public static FailedResponse buildFailedResponse(
       HttpServletRequest request, Exception exception, ApiStatusInfo httpStatusInfo) {
     FailedResponse.FailedResponseBuilder builder = FailedResponse.builder();
@@ -108,7 +166,12 @@ public class ResponseHelper {
     builder.time(LocalDateTime.now());
     return builder.build();
   }
-
+  /**
+   * @author Created by ivan on 3:31 PM 12/24/18.
+   *     <p>//Format Exception Infomation for response
+   * @param exception :
+   * @return java.lang.String
+   */
   public static String formatException(Exception exception) {
     if (null == exception) {
       return null;

@@ -9,8 +9,10 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @author Ivan
- * @since 2018-12-17
+ * OpenAuthInfo Entity
+ *
+ * @version 1.0
+ * @author Created by ivan on 2:23 PM 12/24/18.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

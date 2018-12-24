@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * SwaggerConfiguration
  *
- * <p>TODO
+ * <p>Swagger Set up
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/14/18 - 3:49 PM.
@@ -34,9 +34,9 @@ public class SwaggerConfiguration {
   }
 
   /**
-   * 获取
-   *
-   * @return
+   * @author Created by ivan on 2:27 PM 12/24/18.
+   *     <p>Generate apiInfo
+   * @return springfox.documentation.service.ApiInfo
    */
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
@@ -48,6 +48,11 @@ public class SwaggerConfiguration {
         .build();
   }
 
+  /**
+   * @author Created by ivan on 2:27 PM 12/24/18.
+   *     <p>Generate Html
+   * @return springfox.documentation.spring.web.plugins.Docket
+   */
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)

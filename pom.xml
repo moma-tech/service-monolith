@@ -85,6 +85,13 @@
       <version>${jackson.version}</version>
     </dependency>
 
+    <!-- Gson -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson.version}</version>
+    </dependency>
+
     <!--Mongo Bson -->
     <dependency>
       <groupId>org.mongodb</groupId>

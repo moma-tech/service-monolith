@@ -5,10 +5,12 @@ import com.moma.service.demo.authinfo.model.domain.OpenAuthInfo;
 import com.moma.zoffy.service.BaseService;
 
 /**
- * 服务类
+ * OpenAuthInfoService
  *
- * @author Ivan
- * @since 2018-12-17
+ * <p>Service Interface
+ *
+ * @version 1.0
+ * @author Created by ivan on 2:24 PM 12/24/18.
  */
 public interface OpenAuthInfoService extends BaseService<OpenAuthInfo> {
   /**

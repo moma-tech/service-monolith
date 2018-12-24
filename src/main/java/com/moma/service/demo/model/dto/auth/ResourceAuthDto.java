@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * ResourceAuthDto
  *
- * <p>TODO
+ * <p>Resource Data Transfer Object
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/15/18 - 5:12 PM.

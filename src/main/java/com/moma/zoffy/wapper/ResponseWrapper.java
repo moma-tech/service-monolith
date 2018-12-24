@@ -14,7 +14,7 @@ import org.springframework.util.MimeTypeUtils;
 /**
  * ResponseWrapper
  *
- * <p>TODO
+ * <p>Response Wrapper
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/14/18 - 7:51 PM.
@@ -31,6 +31,12 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     super(response);
   }
 
+  /**
+   * @author Created by ivan on 3:44 PM 12/24/18.
+   *     <p>//write Response back as Json
+   * @param obj :
+   * @return void
+   */
   public void writeJsonResponse(Object obj) {
     if (super.isCommitted()) {
       log.warn("Response is commit");
@@ -42,7 +48,8 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
         writer.flush();
       } catch (IOException e) {
         log.warn(
-            "Error: Response printJson faild, stackTrace: {}", Throwables.getStackTraceAsString(e));
+            "Error: Response print Json faild, stackTrace: {}",
+            Throwables.getStackTraceAsString(e));
       }
     }
   }

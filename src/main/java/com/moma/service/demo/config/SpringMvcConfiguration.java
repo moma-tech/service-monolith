@@ -9,14 +9,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * SpringMvcConfiguration
  *
- * <p>TODO
+ * <p>Spring Mvc Setup
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/18/18 - 6:09 PM.
  */
 @SpringBootConfiguration
 public class SpringMvcConfiguration implements WebMvcConfigurer {
-
+  /**
+   * @author Created by ivan on 2:26 PM 12/24/18.
+   *     <p>Exception Handler
+   * @param exceptionResolvers :
+   * @return void
+   */
   @Override
   public void configureHandlerExceptionResolvers(
       List<HandlerExceptionResolver> exceptionResolvers) {

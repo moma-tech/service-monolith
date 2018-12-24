@@ -15,7 +15,7 @@ import org.springframework.cglib.beans.BeanMap;
 /**
  * BeanHelper
  *
- * <p>TODO
+ * <p>Bean Transformer with Model Mapper
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/15/18 - 7:15 PM.
@@ -34,6 +34,12 @@ public class BeanHelper {
     return MODEL_MAPPER;
   }
 
+  /**
+   * @author Created by ivan on 3:26 PM 12/24/18.
+   *     <p>//Single Bean to Single Map
+   * @param bean :
+   * @return java.util.Map<java.lang.String,java.lang.Object>
+   */
   public static <T> Map<String, Object> beanToMap(T bean) {
     Map<String, Object> map = Collections.emptyMap();
     if (null != bean) {
@@ -46,6 +52,14 @@ public class BeanHelper {
     return map;
   }
 
+  /**
+   * *
+   *
+   * @author Created by ivan on 3:26 PM 12/24/18.
+   *     <p>//Bean List to Map List
+   * @param beanList :
+   * @return java.util.List<java.util.Map<java.lang.String,java.lang.Object>>
+   */
   public static <T> List<Map<String, Object>> beansToMaps(List<T> beanList) {
     List<Map<String, Object>> mapList = Collections.emptyList();
     if (CollectionUtils.isNotEmpty(beanList)) {
@@ -61,6 +75,13 @@ public class BeanHelper {
     return mapList;
   }
 
+  /**
+   * @author Created by ivan on 3:27 PM 12/24/18.
+   *     <p>//Map List to Bean List
+   * @param mapList :
+   * @param beanClass :
+   * @return java.util.List<T>
+   */
   public static <T> List<T> mapsToBeans(List<Map<String, Object>> mapList, Class<T> beanClass) {
     List<T> beanList = Collections.emptyList();
     if (CollectionUtils.isNotEmpty(mapList)) {
@@ -76,6 +97,13 @@ public class BeanHelper {
     return beanList;
   }
 
+  /**
+   * @author Created by ivan on 3:28 PM 12/24/18.
+   *     <p>//Single Map to Bean
+   * @param map :
+   * @param beanClass :
+   * @return T
+   */
   public static <T> T mapToBean(Map<String, Object> map, Class<T> beanClass) {
     T bean = ClassUtils.newInstance(beanClass);
     BeanMap beanMap = BeanMap.create(bean);
@@ -83,6 +111,13 @@ public class BeanHelper {
     return bean;
   }
 
+  /**
+   * @author Created by ivan on 3:28 PM 12/24/18.
+   *     <p>//Bean List To Bean List
+   * @param sourceList :
+   * @param targetClass :
+   * @return java.util.List<T>
+   */
   public static <T> List<T> listToList(List<?> sourceList, Class<T> targetClass) {
     return CollectionUtils.isEmpty(sourceList)
         ? Collections.emptyList()
@@ -92,6 +127,13 @@ public class BeanHelper {
             .collect(Collectors.toList());
   }
 
+  /**
+   * @author Created by ivan on 3:28 PM 12/24/18.
+   *     <p>//Bean to Bean
+   * @param source :
+   * @param targetClass :
+   * @return T
+   */
   public static <T> T beanToBean(Object source, Class<T> targetClass) {
     return getModelMapper().map(source, targetClass);
   }

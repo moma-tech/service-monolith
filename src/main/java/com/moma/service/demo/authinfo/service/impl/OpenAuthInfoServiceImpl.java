@@ -13,15 +13,21 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 /**
- * 服务实现类
+ * OpenAuthInfoServiceImpl Service implementation
  *
- * @author Ivan
- * @since 2018-12-17
+ * @version 1.0
+ * @author Created by ivan on 2:24 PM 12/24/18.
  */
 @Service
 public class OpenAuthInfoServiceImpl extends BaseServiceImpl<OpenAuthInfoDao, OpenAuthInfo>
     implements OpenAuthInfoService {
 
+  /**
+   * @author Created by ivan on 2:24 PM 12/24/18.
+   *     <p>checkCompanyAuthInfo
+   * @param tokenParam :
+   * @return java.lang.Boolean
+   */
   @Override
   public Boolean checkCompanyAuthInfo(TokenParam tokenParam) {
     Map<Property<OpenAuthInfo, ?>, String> paramMap = new HashMap<>(2);

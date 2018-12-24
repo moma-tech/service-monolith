@@ -23,13 +23,23 @@ import org.springframework.web.util.HtmlUtils;
  */
 public class RequestWrapper extends HttpServletRequestWrapper {
 
+  /** Copy Body Byte[] */
   private final byte[] requestBody;
-
+  /**
+   * @author Created by ivan on 3:37 PM 12/24/18.
+   *     <p>//Wrapper
+   * @param request :
+   * @return
+   */
   public RequestWrapper(HttpServletRequest request) {
     super(request);
     requestBody = RequestHelper.getByteBody(request);
   }
-
+  /**
+   * @author Created by ivan on 3:38 PM 12/24/18.
+   *     <p>//Get Request Reader
+   * @return java.io.BufferedReader
+   */
   @Override
   public BufferedReader getReader() {
     ServletInputStream inputStream = getInputStream();
@@ -37,7 +47,11 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         ? null
         : new BufferedReader(new InputStreamReader(inputStream));
   }
-
+  /**
+   * @author Created by ivan on 3:39 PM 12/24/18.
+   *     <p>//Get Request Input Stream
+   * @return javax.servlet.ServletInputStream
+   */
   @Override
   public ServletInputStream getInputStream() {
     if (ObjectUtils.isEmpty(requestBody)) {
@@ -67,24 +81,44 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     };
   }
 
+  /**
+   * @author Created by ivan on 3:39 PM 12/24/18.
+   *     <p>//Get Request Header,escape
+   * @param name :
+   * @return java.lang.String
+   */
   @Override
   public String getHeader(String name) {
     String value = super.getHeader(name);
     return StringUtils.isNotBlank(value) ? HtmlUtils.htmlEscape(value) : "";
   }
-
+  /**
+   * @author Created by ivan on 3:40 PM 12/24/18.
+   *     <p>//Get Request Parameter,escape
+   * @param name :
+   * @return java.lang.String
+   */
   @Override
   public String getParameter(String name) {
     String value = super.getParameter(name);
     return StringUtils.isNotBlank(value) ? HtmlUtils.htmlEscape(value) : "";
   }
-
+  /**
+   * @author Created by ivan on 3:40 PM 12/24/18.
+   *     <p>//get Request Query String, escape
+   * @return java.lang.String
+   */
   @Override
   public String getQueryString() {
     String value = super.getQueryString();
     return StringUtils.isNotBlank(value) ? HtmlUtils.htmlEscape(value) : "";
   }
-
+  /**
+   * @author Created by ivan on 3:41 PM 12/24/18.
+   * <p>//Get Request Attribute, escape
+   * @param name :
+   * @return java.lang.Object
+   **/
   @Override
   public Object getAttribute(String name) {
     Object value = super.getAttribute(name);
@@ -95,7 +129,12 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     }
     return value;
   }
-
+  /**
+   * @author Created by ivan on 3:41 PM 12/24/18.
+   * <p>//Get Request Parameter Vlaue, escape
+   * @param name :
+   * @return java.lang.String[]
+   **/
   @Override
   public String[] getParameterValues(String name) {
     String[] values = super.getParameterValues(name);

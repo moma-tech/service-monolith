@@ -10,7 +10,7 @@ import lombok.ToString;
 /**
  * TokenParam
  *
- * <p>TODO
+ * <p>Token Parameters
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/18/18 - 2:52 PM.

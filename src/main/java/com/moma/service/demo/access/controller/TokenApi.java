@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * TokenApi
  *
- * <p>TODO
+ * <p>Token Api
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/18/18 - 2:43 PM.
@@ -35,6 +35,12 @@ public class TokenApi {
     this.openAuthInfoService = openAuthInfoService;
   }
 
+  /**
+   * @author Created by ivan on 2:19 PM 12/24/18.
+   *     <p>Obtain Token with Parameters
+   * @param tokenParam :
+   * @return java.lang.String
+   */
   @ApiOperation(value = "Obtain Token", notes = "Obtain An Access Token For Company")
   @PostMapping(
       value = "/request",

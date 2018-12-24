@@ -40,7 +40,7 @@ public class RequestLogInfo {
   private String runTime;
   /** Income/User IP */
   private String ip;
-  /** Session/User ID */
+  /** Session/User ID/Company ID */
   private String appid;
 
   public RequestLogInfo(

@@ -6,7 +6,7 @@ import com.moma.zoffy.handler.exception.exceptions.ServiceException;
 /**
  * ApiTypeEnum
  *
- * <p>TODO
+ * <p>Api Type
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/15/18 - 5:20 PM.
@@ -26,6 +26,12 @@ public enum ApiTypeEnum {
     this.type = type;
   }
 
+  /**
+   * @author Created by ivan on 2:36 PM 12/24/18.
+   *     <p>Get Type Enum by type code
+   * @param type :
+   * @return com.moma.service.demo.constants.enumeration.ApiTypeEnum
+   */
   public static ApiTypeEnum getApiTypeEnum(int type) {
     for (ApiTypeEnum apiTypeEnum : ApiTypeEnum.values()) {
       if (apiTypeEnum.getType() == type) {

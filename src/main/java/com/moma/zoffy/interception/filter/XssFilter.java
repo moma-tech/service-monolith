@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * XssFilter
  *
- * <p>TODO
+ * <p>Xss/Request Wrapper Filter
  *
  * @author ivan
  * @version 1.0 Created by ivan on 12/13/18 - 6:13 PM.

@@ -1,5 +1,6 @@
 package com.moma.zoffy.helper;
 
+import com.moma.zoffy.constants.ApiConstants;
 import com.moma.zoffy.constants.HttpConstants;
 import com.moma.zoffy.constants.SysConstants;
 import com.moma.zoffy.constants.enumeration.HttpMethodEnum;
@@ -21,6 +22,19 @@ import org.springframework.util.StreamUtils;
  */
 @Slf4j
 public class RequestHelper {
+  /**
+   * @author Created by ivan on 2:38 PM 12/24/18.
+   *     <p>Get Token from request
+   * @param httpRequest : request
+   * @return ja`va.lang.String
+   */
+  public static String getToken(HttpServletRequest httpRequest) {
+    String token = httpRequest.getHeader(SysConstants.AUTHORIZATION_HEADER);
+    if (StringUtils.isBlank(token)) {
+      token = httpRequest.getParameter(ApiConstants.ACCESS_TOKEN);
+    }
+    return StringUtils.isBlank(token) ? null : token.replaceFirst("Bearer", "");
+  }
 
   /**
    * @param request :
