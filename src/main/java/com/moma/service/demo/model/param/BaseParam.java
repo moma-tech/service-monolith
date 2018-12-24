@@ -48,7 +48,7 @@ public class BaseParam<T> {
   @NotBlank(message = "data 参数不能为空")
   private T data;
 
-  public String toJsonData() {
+  public String getJsonData() {
     return JacksonHelper.toJson(this.getData());
   }
 }

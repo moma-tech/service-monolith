@@ -38,4 +38,11 @@ public class OpenAuthInfoServiceImpl extends BaseServiceImpl<OpenAuthInfoDao, Op
     OpenAuthInfo openAuthInfo = getOne(authWrapper, true);
     return Objects.nonNull(openAuthInfo);
   }
+
+  @Override
+  public String getCompanySignKey(String companyId) {
+    LambdaQueryWrapper<OpenAuthInfo> getCompanyWrapper =
+        new LambdaQueryWrapper<OpenAuthInfo>().eq(OpenAuthInfo::getAppId, companyId);
+    return getOne(getCompanyWrapper).getSignKey();
+  }
 }

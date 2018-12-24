@@ -20,4 +20,12 @@ public interface OpenAuthInfoService extends BaseService<OpenAuthInfo> {
    * @return java.lang.Boolean
    */
   Boolean checkCompanyAuthInfo(TokenParam tokenParam);
+
+  /**
+   * @author Created by ivan on 5:29 PM 12/24/18.
+   *     <p>get Company Sign Key
+   * @param companyId :
+   * @return java.lang.String
+   */
+  String getCompanySignKey(String companyId);
 }

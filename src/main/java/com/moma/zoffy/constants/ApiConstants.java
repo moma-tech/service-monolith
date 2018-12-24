@@ -10,23 +10,29 @@ package com.moma.zoffy.constants;
  */
 public interface ApiConstants {
 
-  /** Token Ref. */
+  /* Token Ref. */
   /** Company ID */
-  public static final String COMPANY_ID = "appId";
+  String COMPANY_ID = "appId";
   /** Access Token */
-  public static final String ACCESS_TOKEN = "accessToken";
+  String ACCESS_TOKEN = "accessToken";
   /** Token RSA Key */
-  public static final String TOKEN_SECRET = "1s6U65P4bAay14bMDgHWgtqaTHNTZPZNMDJu3k";
+  String TOKEN_SECRET = "1s6U65P4bAay14bMDgHWgtqaTHNTZPZNMDJu3k";
 
-  /** Request Ref. */
+  /* Validating Sign Ref. */
+  Long TIMESTAMP_VALID_GAP = 10 * 60 * 1000L;
+  String CALCULATE_SIGN_TIMESTAMP = "timestamp=";
+  String CALCULATE_SIGN_DATA = "&data=";
+  String CALCULATE_SIGN_SIGNKEY = "&sign_key=";
+
+  /* Request Ref. */
   /** Request Start Time */
-  public static final String REQUEST_START_TIME = "startTime";
+  String REQUEST_START_TIME = "startTime";
   /** Request Id */
-  public static final String REQUEST_ID = "requestId";
+  String REQUEST_ID = "requestId";
   /** Requset URL */
-  public static final String REQUEST_URL = "url";
+  String REQUEST_URL = "url";
   /** Request Method */
-  public static final String REQUEST_METHOD = "method";
+  String REQUEST_METHOD = "method";
   /** Request Mapping */
-  public static final String REQUEST_MEPPING = "mapping";
+  String REQUEST_MEPPING = "mapping";
 }

@@ -18,8 +18,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.google.gson.Gson;
-import com.moma.service.demo.model.param.BaseParam;
 import com.moma.zoffy.handler.exception.exceptions.ZoffyException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -129,7 +127,6 @@ public class JacksonHelper {
     try {
       t = getObjectMapper().readValue(json, clazz);
     } catch (Exception ignore) {
-      ignore.printStackTrace();
     }
     return t;
   }
@@ -199,26 +196,5 @@ public class JacksonHelper {
         jsonGenerator.writeString(encodedValue);
       }
     }
-  }
-
-  public static void main(String[] args) {
-    String jsonString =
-        "{\n"
-            + "\"access_token\": \"xxx.xxx.xxx\",\n"
-            + "\n"
-            + "\"timestamp\": 123456789,\n"
-            + "\"employee_id\":12345678,\n"
-            + "\"employee_type\":\"1\",\n"
-            + "\"sign\": \"jifejfwojelajflejf\",\n"
-            + "\"data\":\n"
-            + "    {\n"
-            + "\"employee_id\":\"faxxx12399004392293840274\",\n"
-            + "\"type\":1    \n"
-            + "}\n"
-            + "}";
-    Gson gson = new Gson();
-    BaseParam<Object> pa = JacksonHelper.readValue(jsonString, BaseParam.class);
-    System.out.println(pa.getData().toString());
-    System.out.println(pa.getAccessToken().toString());
   }
 }
