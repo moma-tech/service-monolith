@@ -119,28 +119,9 @@
       <artifactId>guava</artifactId>
       <version>${google-guava.version}</version>
     </dependency>
-
-
     <!-- Common End   -->
 
     <!-- Web Start -->
-    <!-- Spring WEB -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-tomcat</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- Undertow Server -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-undertow</artifactId>
-    </dependency>
-
     <!-- Swagger 2 -->
     <dependency>
       <groupId>io.springfox</groupId>
@@ -158,7 +139,6 @@
       <artifactId>springfox-swagger-ui</artifactId>
       <version>${springfox-swagger.version}</version>
     </dependency>
-
     <!-- Web End   -->
 
     <!-- Service Start -->
@@ -185,7 +165,7 @@
     <!-- Service End   -->
 
     <!-- External Start -->
-    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <!-- Lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -198,7 +178,6 @@
       <artifactId>velocity</artifactId>
       <version>${velocity.version}</version>
     </dependency>
-
     <!-- External End   -->
 
     <!-- Spring Family Start -->
@@ -214,17 +193,39 @@
     </dependency>-->
 
     <!-- Spring Boot -->
+    <!-- Spring WEB -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- Undertow Server -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-undertow</artifactId>
+    </dependency>
+    <!-- Redis -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+    <!-- Configuration -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
-
+    <!-- Actuator -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-
+    <!-- Test -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

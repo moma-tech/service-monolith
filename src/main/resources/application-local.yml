@@ -24,3 +24,22 @@ spring:
       connection-test-query: SELECT 1
   jackson:
     property-naming-strategy: SNAKE_CASE
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        min-idle: 0
+    timeout: 2000ms
+## Cache
+cache:
+  dev:
+    expire-time: 200
+    name: dev
+  default:
+    expire-time: 500
+

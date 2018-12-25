@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import org.springframework.web.util.HtmlUtils;
 
 /**
  * JacksonHelper
@@ -192,8 +191,10 @@ public class JacksonHelper {
         String value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
         throws IOException {
       if (value != null) {
-        String encodedValue = HtmlUtils.htmlEscape(value);
-        jsonGenerator.writeString(encodedValue);
+        // TODO 暂时不进行处理
+        // String encodedValue = HtmlUtils.htmlEscape(value);
+        // jsonGenerator.writeString(encodedValue);
+        jsonGenerator.writeString(value);
       }
     }
   }
