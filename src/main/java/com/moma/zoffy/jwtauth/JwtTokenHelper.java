@@ -26,16 +26,16 @@ public class JwtTokenHelper {
   /**
    * @author Created by ivan on 3:33 PM 12/24/18.
    *     <p>//create a token
-   * @param companyId :
+   * @param claimKey :
    * @param hours :
-   * @param secret :
    * @return java.lang.String
    */
-  public static String create(String companyId, long hours, String secret) {
+  public static String create(String claimKey, long hours) {
+    String secret = ApiConstants.TOKEN_SECRET;
     Date now = new Date();
     Date expire = new Date(now.getTime() + hours * EXPIRE * 1000);
     Map<String, Object> claims = new HashMap<>(2);
-    claims.put(ApiConstants.COMPANY_ID, companyId);
+    claims.put(ApiConstants.CLAIM_KEY, claimKey);
     return Jwts.builder()
         .setClaims(claims)
         .setIssuedAt(now)
@@ -47,10 +47,10 @@ public class JwtTokenHelper {
    * @author Created by ivan on 3:33 PM 12/24/18.
    *     <p>//get Token Clams
    * @param token :
-   * @param secret :
    * @return io.jsonwebtoken.Claims
    */
-  static Claims getClams(String token, String secret) {
+  static Claims getClams(String token) {
+    String secret = ApiConstants.TOKEN_SECRET;
     Claims claims = null;
     try {
       claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
@@ -64,10 +64,9 @@ public class JwtTokenHelper {
    * @author Created by ivan on 3:33 PM 12/24/18.
    *     <p>//Get Company Id from Token
    * @param token :
-   * @param secret :
    * @return java.lang.String
    */
-  public static String getCompanyId(String token, String secret) {
-    return TypeHelper.castToString(getClams(token, secret).get(ApiConstants.COMPANY_ID));
+  public static String getClaimValue(String token) {
+    return TypeHelper.castToString(getClams(token).get(ApiConstants.CLAIM_KEY));
   }
 }

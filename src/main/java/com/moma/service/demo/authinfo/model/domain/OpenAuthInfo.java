@@ -3,7 +3,7 @@ package com.moma.service.demo.authinfo.model.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.moma.zoffy.model.domain.BaseModel;
+import com.moma.zoffy.model.domain.SuperModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("open_auth_info")
-public class OpenAuthInfo extends BaseModel {
+public class OpenAuthInfo extends SuperModel {
 
   public static final String ID = "ID";
   public static final String APP_ID = "APP_ID";

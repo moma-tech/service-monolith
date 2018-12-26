@@ -18,6 +18,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.google.gson.Gson;
 import com.moma.zoffy.handler.exception.exceptions.ZoffyException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -153,6 +154,7 @@ public class JacksonHelper {
    *     <p>Parse Object to Json String
    */
   public static String toJson(Object object) {
+    getObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     if (Objects.nonNull(object) && CharSequence.class.isAssignableFrom(object.getClass())) {
       return object.toString();
     }
@@ -196,6 +198,21 @@ public class JacksonHelper {
         // jsonGenerator.writeString(encodedValue);
         jsonGenerator.writeString(value);
       }
+    }
+  }
+
+  /**
+   * @author Created by ivan on 7:46 PM 12/26/18.
+   *     <p>To Camel Json
+   * @param object :
+   * @return java.lang.String
+   */
+  public static String toCamelJson(Object object) {
+    Gson gson = new Gson();
+    if (Objects.nonNull(object)) {
+      return gson.toJson(object);
+    } else {
+      return new String();
     }
   }
 }

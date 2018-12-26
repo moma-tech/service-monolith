@@ -139,7 +139,7 @@ public class ResponseHelper {
         result,
         (Long) request.getAttribute(ApiConstants.REQUEST_START_TIME),
         RequestHelper.getIpAddr(request),
-        (String) request.getAttribute(ApiConstants.COMPANY_ID));
+        (String) request.getAttribute(ApiConstants.CLAIM_KEY));
 
     response.writeJsonResponse(result);
   }

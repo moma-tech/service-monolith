@@ -11,18 +11,12 @@ package com.moma.zoffy.constants;
 public interface ApiConstants {
 
   /* Token Ref. */
-  /** Company ID */
-  String COMPANY_ID = "appId";
+  /** Claim Key */
+  String CLAIM_KEY = "claimKey";
   /** Access Token */
   String ACCESS_TOKEN = "accessToken";
   /** Token RSA Key */
   String TOKEN_SECRET = "1s6U65P4bAay14bMDgHWgtqaTHNTZPZNMDJu3k";
-
-  /* Validating Sign Ref. */
-  Long TIMESTAMP_VALID_GAP = 10 * 60 * 1000L;
-  String CALCULATE_SIGN_TIMESTAMP = "timestamp=";
-  String CALCULATE_SIGN_DATA = "&data=";
-  String CALCULATE_SIGN_SIGNKEY = "&sign_key=";
 
   /* Request Ref. */
   /** Request Start Time */

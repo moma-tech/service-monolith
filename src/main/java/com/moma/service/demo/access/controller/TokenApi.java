@@ -2,7 +2,6 @@ package com.moma.service.demo.access.controller;
 
 import com.moma.service.demo.access.model.param.TokenParam;
 import com.moma.service.demo.authinfo.service.OpenAuthInfoService;
-import com.moma.zoffy.constants.ApiConstants;
 import com.moma.zoffy.constants.enumeration.HttpStatusCodeEnum;
 import com.moma.zoffy.handler.exception.exceptions.ApiException;
 import com.moma.zoffy.jwtauth.JwtTokenHelper;
@@ -49,7 +48,7 @@ public class TokenApi {
   public String createToken(@RequestBody @Validated TokenParam tokenParam) {
     Boolean check = openAuthInfoService.checkCompanyAuthInfo(tokenParam);
     if (check) {
-      String token = JwtTokenHelper.create(tokenParam.getAppId(), 2, ApiConstants.TOKEN_SECRET);
+      String token = JwtTokenHelper.create(tokenParam.getAppId(), 2);
       return token;
     } else {
       throw new ApiException(HttpStatusCodeEnum.UNAUTHORIZED);

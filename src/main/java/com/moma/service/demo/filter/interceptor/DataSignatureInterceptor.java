@@ -1,7 +1,8 @@
 package com.moma.service.demo.filter.interceptor;
 
 import com.moma.service.demo.authinfo.service.OpenAuthInfoService;
-import com.moma.service.demo.model.param.BaseParam;
+import com.moma.service.demo.constants.SignatureConstants;
+import com.moma.service.demo.model.base.BaseRequest;
 import com.moma.zoffy.constants.ApiConstants;
 import com.moma.zoffy.constants.enumeration.ApiStatusCodeEnum;
 import com.moma.zoffy.handler.exception.exceptions.ApiException;
@@ -35,19 +36,19 @@ public class DataSignatureInterceptor extends HandlerInterceptorAdapter {
     /* If No Token, is a Open One, no need check*/
     if (StringUtils.isNotBlank(token)) {
       /* Read Sign Key From DB */
-      String companyId = (String) httpRequest.getAttribute(ApiConstants.COMPANY_ID);
+      String companyId = (String) httpRequest.getAttribute(ApiConstants.CLAIM_KEY);
       String signKey = openAuthInfoService.getCompanySignKey(companyId);
 
       /* Read Income Msg from Request */
       String requestBody = RequestHelper.getRequestBody(httpRequest);
-      BaseParam params = JacksonHelper.readValue(requestBody, BaseParam.class);
+      BaseRequest params = JacksonHelper.readValue(requestBody, BaseRequest.class);
 
       /* Valid Timestamp */
       if (Objects.isNull(params.getTimestamp())) {
         throw new ApiException(ApiStatusCodeEnum.UN_TIMESTAMP.transform());
       } else {
         if (System.currentTimeMillis()
-            > (params.getTimestamp() + ApiConstants.TIMESTAMP_VALID_GAP)) {
+            > (params.getTimestamp() + SignatureConstants.TIMESTAMP_VALID_GAP)) {
           throw new ApiException(ApiStatusCodeEnum.UN_VALID_TIMESTAMP.transform());
         }
       }
@@ -64,11 +65,11 @@ public class DataSignatureInterceptor extends HandlerInterceptorAdapter {
       /* Valid Signature */
       String calculateSign =
           DigestUtils.md5DigestAsHex(
-              (ApiConstants.CALCULATE_SIGN_TIMESTAMP
+              (SignatureConstants.CALCULATE_SIGN_TIMESTAMP
                       + String.valueOf(params.getTimestamp())
-                      + ApiConstants.CALCULATE_SIGN_DATA
-                      + params.getJsonData()
-                      + ApiConstants.CALCULATE_SIGN_SIGNKEY
+                      + SignatureConstants.CALCULATE_SIGN_DATA
+                      + params.presentJsonData()
+                      + SignatureConstants.CALCULATE_SIGN_SIGNKEY
                       + signKey)
                   .getBytes(StandardCharsets.UTF_8));
       if (!calculateSign.equalsIgnoreCase(params.getSign())) {

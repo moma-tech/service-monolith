@@ -95,13 +95,13 @@ public class BasicAuthFilter implements Filter {
       }
     } else {
       /* Check if Company exist */
-      String companyId = JwtTokenHelper.getCompanyId(token, ApiConstants.TOKEN_SECRET);
+      String companyId = JwtTokenHelper.getClaimValue(token);
       if (StringUtils.isBlank(companyId)) {
         httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         sendUnauthorizedFail(servletRequest, servletResponse);
         return;
       }
-      servletRequest.setAttribute(ApiConstants.COMPANY_ID, companyId);
+      servletRequest.setAttribute(ApiConstants.CLAIM_KEY, companyId);
       /* Check if a OPEN/TOKEN Auth */
       List<ResourceAuthDto> resourceAuthDtoList = resourceService.getNonAuth();
       if (!anyMatch(resourceAuthDtoList, method, requestUri)) {

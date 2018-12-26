@@ -1,7 +1,7 @@
 package com.moma.service.demo.resource.model.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.moma.zoffy.model.domain.BaseModel;
+import com.moma.zoffy.model.domain.SuperModel;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("api_resource")
-public class Resource extends BaseModel {
+public class Resource extends SuperModel {
 
   public static final String ID = "id";
   public static final String API_NAME = "api_name";
