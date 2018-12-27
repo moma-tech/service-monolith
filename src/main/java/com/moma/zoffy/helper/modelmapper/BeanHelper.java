@@ -2,11 +2,13 @@ package com.moma.zoffy.helper.modelmapper;
 
 import com.baomidou.mybatisplus.core.toolkit.ClassUtils;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.moma.zoffy.helper.TypeHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -47,6 +49,27 @@ public class BeanHelper {
       map = new HashMap<>(beanMap.keySet().size());
       for (Object key : beanMap.keySet()) {
         map.put(String.valueOf(key), beanMap.get(key));
+      }
+    }
+    return map;
+  }
+
+  /**
+   * @author Created by ivan on 3:04 PM 12/27/18.
+   *     <p>bean To <String,String> Map
+   *     <p>ignor null value
+   * @param bean :
+   * @return java.util.Map<java.lang.String,java.lang.String>
+   */
+  public static <T> Map<String, String> beanToStringMap(T bean) {
+    Map<String, String> map = Collections.emptyMap();
+    if (null != bean) {
+      BeanMap beanMap = BeanMap.create(bean);
+      map = new HashMap<>(beanMap.keySet().size());
+      for (Object key : beanMap.keySet()) {
+        if (Objects.nonNull(beanMap.get(key))) {
+          map.put(String.valueOf(key), TypeHelper.castToString(beanMap.get(key)));
+        }
       }
     }
     return map;

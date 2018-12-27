@@ -7,50 +7,44 @@ import com.moma.zoffy.model.domain.SuperModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * BaseResponse
+ * BaseResponseList
  *
- * <p>Base Response
- *
- * <p>Use gson to Covert Camel Case to Underscore
+ * <p>TODO
  *
  * @author ivan
- * @version 1.0 Created by ivan on 12/26/18 - 5:51 PM.
+ * @version 1.0 Created by ivan on 12/27/18 - 2:42 PM.
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class BaseResponse<T> extends SuperModel {
+public class BaseResponseList<T> extends SuperModel {
 
-  @ApiModelProperty(value = "内部记录ID", required = false)
+  @ApiModelProperty(value = "内部记录ID")
   private String requestId;
 
-  @ApiModelProperty(value = "响应代码", required = false)
+  @ApiModelProperty(value = "响应代码")
   private Integer code;
 
-  @ApiModelProperty(value = "响应信息", required = false)
-  private String msg;
-
-  @ApiModelProperty(value = "结果数据", required = false)
-  private T data;
-
-  @ApiModelProperty(value = "响应类型", required = false)
+  @ApiModelProperty(value = "响应类型")
   private String type;
 
-  public static BaseResponse fromCamelJson(String json, Class clazz) {
-    Gson gson = new Gson();
-    Type objectType = type(BaseResponse.class, clazz);
-    return gson.fromJson(json, objectType);
-  }
+  @ApiModelProperty(value = "响应信息")
+  private String msg;
 
-  public static BaseResponse fromJson(String json, Class clazz) {
+  @ApiModelProperty(value = "结果数据列表")
+  private List<T> data;
+
+  @SuppressWarnings("rawtypes")
+  public static BaseResponseList fromJson(String json, Class clazz) {
     Gson gson =
         new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create();
-    Type objectType = type(BaseResponse.class, clazz);
+    Type objectType = type(BaseResponseList.class, clazz);
     return gson.fromJson(json, objectType);
   }
 

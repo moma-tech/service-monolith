@@ -46,36 +46,15 @@ public class BaseRequest<T> extends SuperModel {
   @NotBlank(message = "employee_type 参数不能为空")
   private String employeeType;
 
-  @ApiModelProperty(value = "请求ID", required = true)
+  @ApiModelProperty(value = "请求ID", required = false)
   private String requestId;
 
   @ApiModelProperty(value = "数据", required = true)
   @NotBlank(message = "data 参数不能为空")
   private T data;
 
+  @Override
   public String presentJsonData() {
     return JacksonHelper.toJson(this.getData());
-  }
-
-  public static void main(String[] args) {
-    BaseRequest baseRequest = new BaseRequest();
-    baseRequest.setAccessToken("123123123123");
-    baseRequest.setRequestId("aaaaaaa");
-    BaseResponse<BaseRequest> r1 = new BaseResponse<>();
-    r1.setData(baseRequest);
-    String cs = JacksonHelper.toCamelJson(r1);
-    String us = JacksonHelper.toJson(r1);
-
-    System.out.println(JacksonHelper.toCamelJson(baseRequest));
-    System.out.println(JacksonHelper.toJson(baseRequest));
-
-    BaseResponse<BaseRequest> b1 = BaseResponse.fromCamelJson(cs, baseRequest.getClass());
-    BaseResponse<BaseRequest> b2 = BaseResponse.fromUnderscoreJson(us, baseRequest.getClass());
-
-    System.out.println(b1.toString());
-    System.out.println(b2.toString());
-
-    System.out.println(b1.getData().toString());
-    System.out.println(b2.getData().toString());
   }
 }

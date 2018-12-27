@@ -29,4 +29,7 @@ public interface ApiConstants {
   String REQUEST_METHOD = "method";
   /** Request Mapping */
   String REQUEST_MEPPING = "mapping";
+
+  /* Reponse Ref. */
+  Integer SUCCESS = 0;
 }

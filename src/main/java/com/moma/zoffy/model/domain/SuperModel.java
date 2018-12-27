@@ -1,5 +1,6 @@
 package com.moma.zoffy.model.domain;
 
+import com.moma.zoffy.helper.JacksonHelper;
 import com.moma.zoffy.helper.modelmapper.BeanHelper;
 
 /**
@@ -16,5 +17,9 @@ public class SuperModel {
 
   public <T> T beanToBean(Class<T> targetClass) {
     return BeanHelper.beanToBean(this, targetClass);
+  }
+
+  public String presentJsonData() {
+    return JacksonHelper.toJson(this);
   }
 }

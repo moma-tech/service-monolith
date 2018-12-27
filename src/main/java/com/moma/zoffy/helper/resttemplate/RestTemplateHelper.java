@@ -3,17 +3,21 @@ package com.moma.zoffy.helper.resttemplate;
 import com.moma.zoffy.constants.enumeration.JsonNameEnum;
 import com.moma.zoffy.helper.JacksonHelper;
 import com.moma.zoffy.helper.modelmapper.BeanHelper;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * RestTemplateHelper
@@ -23,23 +27,60 @@ import org.springframework.web.client.RestTemplate;
  * @author ivan
  * @version 1.0 Created by ivan on 12/26/18 - 4:12 PM.
  */
+@Slf4j
 public class RestTemplateHelper {
 
   /**
-   * @author Created by ivan on 5:46 PM 12/26/18.
-   *     <p>GET Action
+   * @author Created by ivan on 3:38 PM 12/27/18.
+   *     <p>Get Action
    * @param url :
-   * @param responseClass :
-   * @param urlVariables :
-   * @return T
+   * @param inputHeader :
+   * @param requestObject :
+   * @param jsonNameEnum :
+   * @return java.lang.String
    */
-  public static <T> T get(String url, Class<T> responseClass, Map<String, String> urlVariables) {
+  public static String get(
+      String url,
+      Map<String, String> inputHeader,
+      Object requestObject,
+      JsonNameEnum jsonNameEnum) {
     RestTemplate restTemplate = new RestTemplate();
     restTemplate.setErrorHandler(new RestErrorHandler());
-    if (Objects.isNull(urlVariables) || urlVariables.isEmpty()) {
-      return restTemplate.getForObject(url, responseClass);
+    HttpHeaders httpHeaders = new HttpHeaders();
+    // httpHeaders.add("Accept", MediaType.APPLICATION_JSON.toString());
+    url = expandUrl(url, requestObject, jsonNameEnum);
+    log.info("Get Request URL=" + url);
+    return exchange(
+        url,
+        HttpMethod.GET,
+        String.class,
+        httpHeaders,
+        null,
+        new HashMap<String, String>(0),
+        true,
+        jsonNameEnum);
+  }
+  /**
+   * @author Created by ivan on 3:38 PM 12/27/18.
+   *     <p>URL Build for Get Action
+   * @param url :
+   * @param requestObject :
+   * @param jsonNameEnum :
+   * @return java.lang.String
+   */
+  @SuppressWarnings(value = "unchecked")
+  private static String expandUrl(String url, Object requestObject, JsonNameEnum jsonNameEnum) {
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    if (jsonNameEnum.equals(JsonNameEnum.CAMEL)) {
+      Map<String, String> urlParameters = BeanHelper.beanToStringMap(requestObject);
+      params.setAll(urlParameters);
+    } else {
+      Map<String, String> urlParameters =
+          JacksonHelper.readValue(JacksonHelper.toJson(requestObject), Map.class);
+      params.setAll(urlParameters);
     }
-    return restTemplate.getForObject(url, responseClass, urlVariables);
+    url = UriComponentsBuilder.fromHttpUrl(url).queryParams(params).build().toUriString();
+    return url;
   }
 
   /**
@@ -55,7 +96,7 @@ public class RestTemplateHelper {
   public static <T> T post(
       String url,
       Class<T> responseClass,
-      Map<String, Object> inputHeader,
+      Map<String, String> inputHeader,
       Object requestObject,
       Boolean useJsonBody,
       JsonNameEnum jsonNameEnum) {
@@ -69,7 +110,7 @@ public class RestTemplateHelper {
       HttpEntity<String> requestEntity = buildJsonEntity(requestObject, httpHeaders, jsonNameEnum);
       return restTemplate.postForObject(url, requestEntity, responseClass);
     } else {
-      HttpEntity<LinkedMultiValueMap<String, Object>> formEntity =
+      HttpEntity<LinkedMultiValueMap<String, String>> formEntity =
           buildFormEntity(requestObject, httpHeaders);
       return restTemplate.postForObject(url, formEntity, responseClass);
     }
@@ -81,7 +122,7 @@ public class RestTemplateHelper {
    * @param url :
    * @param method :
    * @param responseClass :
-   * @param inputHeader :
+   * @param httpHeaders :
    * @param requestObject :
    * @param urlVariables :
    * @param useJsonBody :
@@ -91,7 +132,7 @@ public class RestTemplateHelper {
       String url,
       HttpMethod method,
       Class<T> responseClass,
-      Map<String, Object> inputHeader,
+      HttpHeaders httpHeaders,
       Object requestObject,
       Map<String, String> urlVariables,
       Boolean useJsonBody,
@@ -99,15 +140,13 @@ public class RestTemplateHelper {
     RestTemplate restTemplate = new RestTemplate();
     restTemplate.setErrorHandler(new RestErrorHandler());
 
-    HttpHeaders httpHeaders = formHeader(inputHeader, useJsonBody);
-
     if (useJsonBody) {
       HttpEntity<String> requestEntity = buildJsonEntity(requestObject, httpHeaders, jsonNameEnum);
       ResponseEntity<T> resultEntity =
           restTemplate.exchange(url, method, requestEntity, responseClass, urlVariables);
       return resultEntity.getBody();
     } else {
-      HttpEntity<LinkedMultiValueMap<String, Object>> formEntity =
+      HttpEntity<LinkedMultiValueMap<String, String>> formEntity =
           buildFormEntity(requestObject, httpHeaders);
       ResponseEntity<T> resultEntity =
           restTemplate.exchange(url, method, formEntity, responseClass, urlVariables);
@@ -121,13 +160,13 @@ public class RestTemplateHelper {
    * @param inputHeader :
    * @return org.springframework.http.HttpHeaders
    */
-  private static HttpHeaders formHeader(Map<String, Object> inputHeader, Boolean useJsonBody) {
+  private static HttpHeaders formHeader(Map<String, String> inputHeader, Boolean useJsonBody) {
     HttpHeaders httpHeaders = new HttpHeaders();
     if (inputHeader != null) {
       Set<String> keys = inputHeader.keySet();
       for (Iterator<String> i = keys.iterator(); i.hasNext(); ) {
         String key = i.next();
-        httpHeaders.add(key, inputHeader.get(key).toString());
+        httpHeaders.add(key, inputHeader.get(key));
       }
     }
     if (useJsonBody) {
@@ -170,14 +209,14 @@ public class RestTemplateHelper {
    * @return
    *     org.springframework.http.HttpEntity<org.springframework.util.LinkedMultiValueMap<java.lang.String,java.lang.Object>>
    */
-  private static HttpEntity<LinkedMultiValueMap<String, Object>> buildFormEntity(
+  private static HttpEntity<LinkedMultiValueMap<String, String>> buildFormEntity(
       Object requestObject, HttpHeaders httpHeaders) {
-    LinkedMultiValueMap<String, Object> requestParams = new LinkedMultiValueMap<>();
+    LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
     if (Objects.nonNull(requestObject)) {
-      Map<String, Object> requestMap = BeanHelper.beanToMap(requestObject);
+      Map<String, String> requestMap = BeanHelper.beanToStringMap(requestObject);
       requestParams.setAll(requestMap);
     }
-    HttpEntity<LinkedMultiValueMap<String, Object>> requestFormEntity =
+    HttpEntity<LinkedMultiValueMap<String, String>> requestFormEntity =
         new HttpEntity<>(requestParams, httpHeaders);
     return requestFormEntity;
   }

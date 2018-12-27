@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +29,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author ivan
  * @version 1.0 Created by ivan on 12/25/18 - 2:45 PM.
  */
-@SpringBootConfiguration
+// @SpringBootConfiguration
 public class RedisConfiguration extends CachingConfigurerSupport {
   public static final Long NANO_ADJUSTMENT = 2L;
 

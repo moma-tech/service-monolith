@@ -1,8 +1,15 @@
 package com.moma.service.demo.helper.http;
 
-import com.moma.service.demo.model.base.BaseRequest;
+import com.moma.service.demo.model.base.BaseResponse;
+import com.moma.service.demo.model.base.BaseResponseList;
+import com.moma.zoffy.constants.ApiConstants;
+import com.moma.zoffy.constants.enumeration.JsonNameEnum;
+import com.moma.zoffy.helper.JacksonHelper;
+import com.moma.zoffy.helper.resttemplate.RestTemplateHelper;
+import java.util.Map;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.slf4j.MDC;
 
 /**
  * ApiCaller
@@ -12,6 +19,165 @@ import org.springframework.stereotype.Component;
  * @author ivan
  * @version 1.0 Created by ivan on 12/26/18 - 5:47 PM.
  */
-@Component
 @Slf4j
-public class ApiCaller<T extends BaseRequest, R> {}
+public class ApiCaller<T, R> {
+  /**
+   * @author Created by ivan on 3:51 PM 12/27/18.
+   *     <p>do Get with Camel Parameters
+   * @param url :
+   * @param request :
+   * @param response :
+   * @param inputHeader :
+   * @return com.moma.service.demo.model.base.BaseResponse<R>
+   */
+  public BaseResponse<R> doGet(
+      @NonNull String url, T request, R response, Map<String, String> inputHeader) {
+    return doGet(url, request, response, inputHeader, JsonNameEnum.CAMEL);
+  }
+  /**
+   * @author Created by ivan on 3:52 PM 12/27/18.
+   *     <p>do Get with define Parameters format
+   * @param url :
+   * @param request :
+   * @param response :
+   * @param inputHeader :
+   * @param jsonNameEnum :
+   * @return com.moma.service.demo.model.base.BaseResponse<R>
+   */
+  @SuppressWarnings(value = "unchecked")
+  public BaseResponse<R> doGet(
+      @NonNull String url,
+      T request,
+      R response,
+      Map<String, String> inputHeader,
+      JsonNameEnum jsonNameEnum) {
+    log.info("Get Request: " + url + " | Path Params:" + JacksonHelper.toCamelJson(request));
+    String resultString = RestTemplateHelper.get(url, inputHeader, request, jsonNameEnum);
+    log.info("Get Request: " + url + " | Response String: " + resultString);
+    BaseResponse<R> result =
+        (BaseResponse<R>) (BaseResponse.fromJson(resultString, response.getClass()));
+    if (ApiConstants.SUCCESS.compareTo(result.getCode()) == 0) {
+      result.setRequestId(MDC.get(ApiConstants.REQUEST_ID));
+    }
+    return result;
+  }
+  /**
+   * @author Created by ivan on 3:52 PM 12/27/18.
+   *     <p>do List Get with Camel Parameters
+   * @param url :
+   * @param request :
+   * @param response :
+   * @param inputHeader :
+   * @return com.moma.service.demo.model.base.BaseResponseList<R>
+   */
+  public BaseResponseList<R> doQueryList(
+      @NonNull String url, T request, R response, Map<String, String> inputHeader) {
+    return doQueryList(url, request, response, inputHeader, JsonNameEnum.CAMEL);
+  }
+  /**
+   * @author Created by ivan on 3:52 PM 12/27/18.
+   *     <p>do List Get with define Parameters format
+   * @param url :
+   * @param request :
+   * @param response :
+   * @param inputHeader :
+   * @param jsonNameEnum :
+   * @return com.moma.service.demo.model.base.BaseResponseList<R>
+   */
+  @SuppressWarnings(value = "unchecked")
+  public BaseResponseList<R> doQueryList(
+      @NonNull String url,
+      T request,
+      R response,
+      Map<String, String> inputHeader,
+      JsonNameEnum jsonNameEnum) {
+    log.info("Get List Request: " + url + " | Path Params: " + JacksonHelper.toCamelJson(request));
+    String resultString = RestTemplateHelper.get(url, inputHeader, request, jsonNameEnum);
+    log.info("Get List Request: " + url + " | Response String: " + resultString);
+    BaseResponseList<R> resultList = BaseResponseList.fromJson(resultString, response.getClass());
+    if (ApiConstants.SUCCESS.compareTo(resultList.getCode()) == 0) {
+      resultList.setRequestId(MDC.get(ApiConstants.REQUEST_ID));
+    }
+    return resultList;
+  }
+
+  /**
+   * @author Created by ivan on 4:17 PM 12/27/18.
+   *     <p>do Post with Camel Json Body
+   * @param url :
+   * @param request :
+   * @param response :
+   * @param inputHeader :
+   * @return com.moma.service.demo.model.base.BaseResponse<R>
+   */
+  public BaseResponse<R> doPost(
+      @NonNull String url, T request, R response, Map<String, String> inputHeader) {
+    return doPost(url, request, response, inputHeader, JsonNameEnum.CAMEL);
+  }
+
+  /**
+   * @author Created by ivan on 4:18 PM 12/27/18.
+   *     <p>do Post with custom Json Body
+   * @param url :
+   * @param request :
+   * @param response :
+   * @param inputHeader :
+   * @param jsonNameEnum :
+   * @return com.moma.service.demo.model.base.BaseResponse<R>
+   */
+  @SuppressWarnings(value = "unchecked")
+  public BaseResponse<R> doPost(
+      @NonNull String url,
+      T request,
+      R response,
+      Map<String, String> inputHeader,
+      JsonNameEnum jsonNameEnum) {
+    log.info(
+        "Get List Request: " + url + " | Object Params: " + JacksonHelper.toCamelJson(request));
+
+    String resultString =
+        RestTemplateHelper.post(url, String.class, inputHeader, request, true, jsonNameEnum);
+    log.info("Post Request: " + url + " | Response String: " + resultString);
+    return (BaseResponse<R>) (BaseResponse.fromJson(resultString, response.getClass()));
+  }
+
+  /**
+   * @author Created by ivan on 4:19 PM 12/27/18.
+   *     <p>do Post with Camel Form Body
+   * @param url :
+   * @param request :
+   * @param response :
+   * @param inputHeader :
+   * @return com.moma.service.demo.model.base.BaseResponse<R>
+   */
+  public BaseResponse<R> doFormPost(
+      @NonNull String url, T request, R response, Map<String, String> inputHeader) {
+    return doFormPost(url, request, response, inputHeader, JsonNameEnum.CAMEL);
+  }
+
+  /**
+   * @author Created by ivan on 4:19 PM 12/27/18.
+   *     <p>do Post with custom format Form Body
+   * @param url :
+   * @param request :
+   * @param response :
+   * @param inputHeader :
+   * @param jsonNameEnum :
+   * @return com.moma.service.demo.model.base.BaseResponse<R>
+   */
+  @SuppressWarnings(value = "unchecked")
+  public BaseResponse<R> doFormPost(
+      @NonNull String url,
+      T request,
+      R response,
+      Map<String, String> inputHeader,
+      JsonNameEnum jsonNameEnum) {
+    log.info(
+        "Get List Request: " + url + " | Object Params: " + JacksonHelper.toCamelJson(request));
+
+    String resultString =
+        RestTemplateHelper.post(url, String.class, inputHeader, request, false, jsonNameEnum);
+    log.info("Post Request: " + url + " | Response String: " + resultString);
+    return (BaseResponse<R>) (BaseResponse.fromJson(resultString, response.getClass()));
+  }
+}
