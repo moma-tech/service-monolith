@@ -2,10 +2,12 @@ package com.demo.api.demo.config;
 
 import com.demo.api.demo.interception.interceptor.DataSignatureInterceptor;
 import com.demo.framework.handler.exception.GeneralExceptionHandler;
+import com.demo.framework.wapper.HttpMessageConverterWrapper;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -42,7 +44,7 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     log.info("Configure Interceptor");
     registry
         .addInterceptor(getDataSignatureInterceptor())
-        .addPathPatterns("/open/**")
+        .addPathPatterns("/open/*")
         .excludePathPatterns("/open/token/request");
   }
 
@@ -55,10 +57,10 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
   DataSignatureInterceptor getDataSignatureInterceptor() {
     return new DataSignatureInterceptor();
   }
-  /*
+
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
     log.info("Configure Converter");
     converters.forEach(HttpMessageConverterWrapper.objectMapperWrapper());
-  }*/
+  }
 }

@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: local
+  swagger:
+    enabled: true
 appinfo:
   title: 奥特曼大帝国
   des: This is a Demo API project
